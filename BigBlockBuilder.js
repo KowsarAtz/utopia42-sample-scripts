@@ -1,4 +1,5 @@
 console.log("Running BigBlockBuilder");
+console.log(Inputs);
 
 var x = Inputs.X;
 var y = Inputs.Y;
