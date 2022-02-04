@@ -21,7 +21,7 @@
     "name": "a",
     "type": "number",
     "required": true,
-    "value": 5
+    "defaultValue": 5
   },
   {
     "name": "b",
