@@ -1,0 +1,65 @@
+[
+  {
+    "name": "X",
+    "type": "number",
+    "hint": "X coordinate of the starting point"
+  },
+  {
+    "name": "Y",
+    "type": "number",
+    "hint": "Y coordinate of the starting point"
+  },
+  {
+    "name": "Z",
+    "type": "number",
+    "hint": "Z coordinate of the starting point"
+  },
+  {
+    "width": "a",
+    "type": "number"
+  },
+  {
+    "height": "b",
+    "type": "number"
+  },
+  {
+    "height": "c",
+    "type": "number"
+  },
+  {
+    "name": "Block Type",
+    "type": "option",
+    "options": [
+      "grass",
+      "dark_grass",
+      "bedrock",
+      "dirt",
+      "stone",
+      "sand",
+      "bricks",
+      "wood",
+      "planks",
+      "cobblestone",
+      "black_terracotta",
+      "blue_wool",
+      "cyan_wool",
+      "diamond",
+      "end_stone",
+      "gold",
+      "gravel",
+      "green_wool",
+      "ice",
+      "lime_wool",
+      "magma",
+      "mossy_stone_bricks",
+      "nether_bricks",
+      "polished_andesite",
+      "purple_wool",
+      "purpur",
+      "quartz",
+      "red_wool",
+      "snow",
+      "stone_bricks"
+    ]
+  }
+]
