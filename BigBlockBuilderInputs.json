@@ -1,18 +1,21 @@
 [
   {
-    "name": "X",
+    "label": "X",
+    "name": "x",
     "type": "number",
     "hint": "X coordinate of the starting point",
     "required": true
   },
   {
-    "name": "Y",
+    "label": "Y",
+    "name": "y",
     "type": "number",
     "hint": "Y coordinate of the starting point",
     "required": true
   },
   {
     "name": "Z",
+    "label": "z",
     "type": "number",
     "hint": "Z coordinate of the starting point",
     "required": true
@@ -40,7 +43,8 @@
     ]
   },
   {
-    "name": "Block Type",
+    "label": "Block Type",
+    "name": "blockType",
     "type": "selection",
     "options": [
       { "key": "grass", "value": "grass" },
