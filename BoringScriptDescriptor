@@ -1,0 +1,8 @@
+[
+    {
+        "label": "Execution time",
+        "name": "time",
+        "type": "number",
+        "required": true
+    },
+]
