@@ -1,0 +1,14 @@
+[
+    {
+        "label": "I",
+        "name": "i",
+        "type": "number",
+        "required": true
+    },
+    {
+        "label": "J",
+        "name": "j",
+        "type": "number",
+        "required": true
+    }
+]
