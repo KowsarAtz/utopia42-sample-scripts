@@ -4,5 +4,5 @@
         "name": "time",
         "type": "number",
         "required": true
-    },
+    }
 ]
