@@ -8,5 +8,6 @@ async function main() {
       let a = i + j;
       let b = i * j;
     }
+    console.log(`i: ${i}`);
   }
 }
