@@ -5,6 +5,7 @@ async function main() {
     for (let j = 0; j < Inputs.j; j++) {
       let a = i + j;
       let b = i * j;
+      console.log(a + b);
     }
   }
 }
