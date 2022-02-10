@@ -1,23 +1,9 @@
 [
   {
-    "label": "X",
-    "name": "x",
-    "type": "number",
-    "hint": "X coordinate of the starting point",
-    "required": true
-  },
-  {
-    "label": "Y",
-    "name": "y",
-    "type": "number",
-    "hint": "Y coordinate of the starting point",
-    "required": true
-  },
-  {
-    "label": "Z",
-    "name": "z",
-    "type": "number",
-    "hint": "Z coordinate of the starting point",
+    "label": "Position",
+    "name": "position",
+    "type": "position",
+    "hint": "Position of the starting point",
     "required": true
   },
   {
