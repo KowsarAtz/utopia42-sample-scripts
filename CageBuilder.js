@@ -11,7 +11,7 @@ async function main() {
 
   for (let zz = z - 1; zz <= z + 1; zz + 2) {
     for (let yy = y - 1; y <= y + 1; yy + 2) {
-      for (let xx = x; x <= x + Inputs.height; xx++) {
+      for (let xx = x; xx <= x + Inputs.height; xx++) {
         console.log("Placing block at: " + xx + ", " + yy + ", " + zz);
         UtopiaApi.placeBlock(Inputs.blockType, xx, yy, zz);
       }
