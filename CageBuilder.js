@@ -9,11 +9,11 @@ async function main() {
 
   console.log("Player position rounded: " + x + ", " + y + ", " + z);
 
-  for (let zz = z - 1; zz <= z + 1; zz + 2) {
-    for (let yy = y - 1; y <= y + 1; yy + 2) {
-      for (let xx = x; xx <= x + Inputs.height; xx++) {
-        console.log("Placing block at: " + xx + ", " + yy + ", " + zz);
-        UtopiaApi.placeBlock(Inputs.blockType, xx, yy, zz);
+  for (let zz = z - 1; zz <= z + 1; zz = zz + 2) {
+    for (let xx = x - 1; x <= x + 1; xx = xx + 2) {
+      for (let yy = x; yy <= x + Inputs.height; yy++) {
+        console.log("Placing block at: " + yy + ", " + xx + ", " + zz);
+        UtopiaApi.placeBlock(Inputs.blockType, yy, xx, zz);
       }
     }
   }
