@@ -1,7 +1,7 @@
 console.log("Running CageBuilder");
 
 let pos = Inputs.playerPosition;
-log("Player position: " + pos);
+console.log("Player position: " + pos);
 
 let x = Math.round(pos.x);
 let y = Math.round(pos.y);
