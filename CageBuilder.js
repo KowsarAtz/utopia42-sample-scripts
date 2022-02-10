@@ -13,7 +13,7 @@ async function main() {
     for (let xx = x - 1; xx <= x + 1; xx = xx + 2) {
       for (let yy = y; yy <= y + Inputs.height; yy++) {
         console.log("Placing block at: " + xx + ", " + yy + ", " + zz);
-        UtopiaApi.placeBlock(Inputs.blockType, yy, xx, zz);
+        UtopiaApi.placeBlock(Inputs.blockType, xx, yy, zz);
       }
     }
   }
