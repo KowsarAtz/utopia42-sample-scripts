@@ -5,6 +5,7 @@ async function main() {
 
   for (let i = land.x1; i < land.x2; i++) {
     for (let j = Inputs.startingHeight; i < Inputs.height; j++) {
+      console.log("Placing block at: " + i + ", " + land.y1 + ", " + j);
       UtopiaApi.placeBlock(Inputs.blockType, i, land.y1, j);
     }
   }
