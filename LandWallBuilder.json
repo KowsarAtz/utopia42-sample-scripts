@@ -1,0 +1,28 @@
+[
+  {
+    "label": "Height",
+    "name": "height",
+    "type": "number",
+    "required": true,
+    "defaultValue": 5
+  },
+  {
+    "label": "Starting Height",
+    "name": "startingHeight",
+    "type": "number",
+    "required": true,
+    "defaultValue": 0
+  },
+  {
+    "label": "Block Type",
+    "name": "blockType",
+    "type": "blockType",
+    "required": true
+  },
+  {
+    "label": "Land",
+    "name": "land",
+    "type": "land",
+    "required": true
+  }
+]
