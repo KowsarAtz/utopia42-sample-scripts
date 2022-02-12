@@ -55,7 +55,7 @@
     "label": "Land",
     "name": "param7",
     "type": "land",
-    "required": true
+    "required": false
   },
   {
     "label": "Positions",
