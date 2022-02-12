@@ -16,12 +16,13 @@
     "name": "b",
     "type": "number",
     "required": true,
-    "value": 5
+    "defaultValue": 5
   },
   {
     "name": "c",
     "type": "number",
     "required": true,
+    "defaultValue": 5,
     "options": [
       { "key": "5", "value": 5 },
       { "key": "10", "value": 10 },
@@ -32,6 +33,7 @@
     "label": "Block Type",
     "name": "blockType",
     "type": "selection",
+    "defaultValue": "bricks",
     "options": [
       { "key": "grass", "value": "grass" },
       { "key": "dark_grass", "value": "dark_grass" },
