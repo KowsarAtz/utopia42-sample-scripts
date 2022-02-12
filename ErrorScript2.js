@@ -1,3 +1,5 @@
 console.log("Running ErrorScript");
 
-console.log(Inputs.asdf);
+async function main(){
+    console.log(Inputs.asdf);
+}
