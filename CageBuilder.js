@@ -14,11 +14,9 @@ async function main() {
       for (let yy = y; yy <= y + Inputs.height; yy++) {
         if (x != xx || y != yy || z != zz) {
           let res = await UtopiaApi.placeBlock(Inputs.blockType, xx, yy, zz);
-          if (!res) {
-            console.log("Error placing block: " + xx + ", " + yy + ", " + zz);
-          } else {
-            console.log("Placed block: " + xx + ", " + yy + ", " + zz);
-          }
+          console.log(
+            "Placed block at " + xx + ", " + yy + ", " + zz + ": " + res
+          );
         }
       }
     }
