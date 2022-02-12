@@ -1,7 +1,7 @@
 async function main() {
   console.log("Running CageBuilder");
 
-  let pos = Inputs.playerPosition;
+  let pos = await UtopiaApi.getPlayerPosition();
 
   let x = Math.round(pos.x);
   let y = Math.round(pos.y);
