@@ -1,0 +1,39 @@
+[
+  {
+    "label": "Block Type",
+    "name": "blockType",
+    "type": "selection",
+    "options": [
+      { "key": "grass", "value": "grass" },
+      { "key": "dark_grass", "value": "dark_grass" },
+      { "key": "bedrock", "value": "bedrock" },
+      { "key": "dirt", "value": "dirt" },
+      { "key": "stone", "value": "stone" },
+      { "key": "sand", "value": "sand" },
+      { "key": "bricks", "value": "bricks" },
+      { "key": "wood", "value": "wood" },
+      { "key": "planks", "value": "planks" },
+      { "key": "cobblestone", "value": "cobblestone" },
+      { "key": "black_terracotta", "value": "black_terracotta" },
+      { "key": "blue_wool", "value": "blue_wool" },
+      { "key": "cyan_wool", "value": "cyan_wool" },
+      { "key": "diamond", "value": "diamond" },
+      { "key": "end_stone", "value": "end_stone" },
+      { "key": "gold", "value": "gold" },
+      { "key": "gravel", "value": "gravel" },
+      { "key": "green_wool", "value": "green_wool" },
+      { "key": "ice", "value": "ice" },
+      { "key": "lime_wool", "value": "lime_wool" },
+      { "key": "magma", "value": "magma" },
+      { "key": "mossy_stone_bricks", "value": "mossy_stone_bricks" },
+      { "key": "nether_bricks", "value": "nether_bricks" },
+      { "key": "polished_andesite", "value": "polished_andesite" },
+      { "key": "purple_wool", "value": "purple_wool" },
+      { "key": "purpur", "value": "purpur" },
+      { "key": "quartz", "value": "quartz" },
+      { "key": "red_wool", "value": "red_wool" },
+      { "key": "snow", "value": "snow" },
+      { "key": "stone_bricks", "value": "stone_bricks" }
+    ]
+  }
+]
