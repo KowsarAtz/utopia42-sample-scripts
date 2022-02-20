@@ -1,3 +1,1 @@
-module.exports.sample = () => {
-    console.log("script loaded successfully");
-}
+x = 1;
