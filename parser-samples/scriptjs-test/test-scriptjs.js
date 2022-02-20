@@ -1,5 +1,15 @@
-importScripts("https://cdn.jsdelivr.net/gh/KowsarAtz/utopia42-sample-scripts@main/parser-samples/scriptjs-test/data%20copy.js");
+importScripts("https://cdn.jsdelivr.net/gh/KowsarAtz/utopia42-sample-scripts@main/parser-samples/scriptjs-test/data%20copy%202.js");
 
 async function main(){
-    console.log("here is x", self.x)
+    try{
+        self.exportedFunction()
+    }
+    catch(e){
+    }
+
+    try{
+        self.unExportedFunction()
+    }
+    catch(e){
+    }
 }
