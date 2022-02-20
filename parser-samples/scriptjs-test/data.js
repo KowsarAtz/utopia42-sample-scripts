@@ -1,4 +1,3 @@
-module.exports.sample = {
-    name: 'my name',
-    lastName: 'last name'
+module.exports.sample = () => {
+    console.log("script loaded successfully");
 }
