@@ -50,7 +50,7 @@ function getDetails(voxels) {
         maxY = voxel.y > maxY ? voxel.y : maxY;
         maxZ = voxel.z > maxZ ? voxel.z : maxZ;
 
-        if (!(voxel.i in uniqueColorIndices)) uniqueColorIndices.push(voxel.i);
+        if (!(voxel.c in uniqueColorIndices)) uniqueColorIndices.push(voxel.c);
     }
     return {
         min: { x: minX, y: minY, z: minZ },
@@ -111,7 +111,7 @@ async function main() {
 
         try {
             const res = await UtopiaApi.placeBlock(
-                blockTypeInputs["bt" + voxel.i],
+                blockTypeInputs["bt" + voxel.c],
                 xx,
                 yy,
                 zz
