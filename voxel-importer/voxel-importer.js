@@ -12,28 +12,52 @@ const baseParams = [
         required: true,
     },
     {
+        label: "Parser Script URL",
+        name: "parserUrl",
+        type: "text",
+        required: true,
+    },
+    {
         label: "Voxel File URL",
         name: "voxUrl",
         type: "text",
         required: true,
     },
+    {
+        label: "Voxel Model Bounds Limit",
+        name: "boundsLimit",
+        type: "number",
+        required: true,
+    },
 ];
 
-function getVoxelsMins(voxels) {
+function getBounds(voxels) {
+    let maxX = -Infinity;
+    let maxY = -Infinity;
+    let maxZ = -Infinity;
+
     let minX = Infinity;
     let minY = Infinity;
     let minZ = Infinity;
+
     for (const voxel of voxels) {
         minX = voxel.x < minX ? voxel.x : minX;
         minY = voxel.y < minY ? voxel.y : minY;
         minZ = voxel.z < minZ ? voxel.z : minZ;
+
+        maxX = voxel.x > maxX ? voxel.x : maxX;
+        maxY = voxel.y > maxY ? voxel.y : maxY;
+        maxZ = voxel.z > maxZ ? voxel.z : maxZ;
     }
-    return { x: minX, y: minY, z: minZ };
+    return { 
+        min: {x: minX, y: minY, z: minZ}, 
+        max: {x: maxX, y: maxY, z: maxZ}
+    };
 }
 
 async function main() {
-    importScripts("https://cdn.jsdelivr.net/gh/KowsarAtz/utopia42-sample-scripts@main/parser-samples/scriptjs-test/bundle.js");
     const inputs = await UtopiaApi.getInputsFromUser(baseParams);
+    importScripts(inputs.parserUrl);
     const buffer = await (await fetch(new Request(inputs.voxUrl))).arrayBuffer();
     const data = vox.parseMagicaVoxel(buffer);
 
@@ -42,13 +66,19 @@ async function main() {
     let y = Math.round(pos.y);
     let z = Math.round(pos.z);
     
-    console.log("Starting position: " + x + ", " + y + ", " + z);
     
-    const mins = getVoxelsMins(data.XYZI);
+    const bounds = getBounds(data.XYZI);
+    const limit = inputs.boundsLimit;
+
+    if(bounds.max.x - bounds.min.x > limit || bounds.max.y - bounds.min.y > limit || bounds.max.z - bounds.min.z > limit){
+        console.error("Model size exceeds allowed bounds")
+        return;
+    }
+    
     for (const voxel of data.XYZI) {
-        const xx = x + voxel.x - mins.x;
-        const yy = y + voxel.z - mins.z;
-        const zz = z + voxel.y - mins.y;
+        const xx = x + voxel.x - bounds.min.x;
+        const yy = y + voxel.z - bounds.min.z;
+        const zz = z + voxel.y - bounds.min.y;
 
         const res = await UtopiaApi.placeBlock(inputs.blockType, xx, yy, zz);
         console.log(
