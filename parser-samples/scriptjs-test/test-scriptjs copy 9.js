@@ -1,6 +1,6 @@
 async function main(){
     importScripts("https://cdn.jsdelivr.net/gh/KowsarAtz/utopia42-sample-scripts@main/parser-samples/scriptjs-test/bundle.js");
-    var myRequest = new Request('https://github.com/KowsarAtz/utopia42-sample-scripts/blob/b038e4473faccc677f68ab5f9703d6a1ee989b86/parser-samples/castle.vox');
+    var myRequest = new Request('https://cdn.jsdelivr.net/gh/KowsarAtz/utopia42-sample-scripts@b038e4473faccc677f68ab5f9703d6a1ee989b86/parser-samples/castle.vox');
     const buffer = await (await fetch(myRequest)).arrayBuffer();
     const vx = vox.parseMagicaVoxel(buffer);
 
