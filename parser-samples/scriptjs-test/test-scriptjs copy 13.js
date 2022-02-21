@@ -39,7 +39,7 @@ async function main() {
 
     const pos = inputs.startingPosition;
     let x = Math.round(pos.x);
-    let y = Math.round(pos.y) + 3;
+    let y = Math.round(pos.y);
     let z = Math.round(pos.z);
     
     console.log("Starting position: " + x + ", " + y + ", " + z);
