@@ -13,7 +13,7 @@ const baseParams = [
         type: "text",
         required: true,
         defaultValue:
-            "https://cdn.jsdelivr.net/gh/KowsarAtz/utopia42-sample-scripts@69c23508f1611b46077f0f784c76be009df403ee/voxel-importer/vox-samples/castle.vox",
+            "https://cdn.jsdelivr.net/gh/ephtracy/voxel-model@master/vox/character/chr_sword.vox",
     },
     {
         label: "Starting Position",
