@@ -16,18 +16,21 @@ const baseParams = [
         name: "parserUrl",
         type: "text",
         required: true,
+        defaultValue: "https://cdn.jsdelivr.net/gh/KowsarAtz/utopia42-sample-scripts@69c23508f1611b46077f0f784c76be009df403ee/voxel-importer/parser-lib.js"
     },
     {
         label: "Voxel File URL",
         name: "voxUrl",
         type: "text",
         required: true,
+        defaultValue: "https://cdn.jsdelivr.net/gh/KowsarAtz/utopia42-sample-scripts@69c23508f1611b46077f0f784c76be009df403ee/voxel-importer/vox-samples/castle.vox"
     },
     {
         label: "Voxel Model Bounds Limit",
         name: "boundsLimit",
         type: "number",
         required: true,
+        defaultValue: 50
     },
 ];
 
