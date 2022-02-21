@@ -6,7 +6,7 @@ const baseParams = [
         required: true,
     },
     {
-        label: 'Starting Position',
+        label: "Starting Position",
         name: "startingPosition",
         type: "position",
         required: true,
@@ -49,32 +49,41 @@ function getBounds(voxels) {
         maxY = voxel.y > maxY ? voxel.y : maxY;
         maxZ = voxel.z > maxZ ? voxel.z : maxZ;
     }
-    return { 
-        min: {x: minX, y: minY, z: minZ}, 
-        max: {x: maxX, y: maxY, z: maxZ}
+    return {
+        min: { x: minX, y: minY, z: minZ },
+        max: { x: maxX, y: maxY, z: maxZ },
     };
 }
 
 async function main() {
     const inputs = await UtopiaApi.getInputsFromUser(baseParams);
     importScripts(inputs.parserUrl);
-    const buffer = await (await fetch(new Request(inputs.voxUrl))).arrayBuffer();
+    const buffer = await (
+        await fetch(new Request(inputs.voxUrl))
+    ).arrayBuffer();
     const data = vox.parseMagicaVoxel(buffer);
 
     const pos = inputs.startingPosition;
     let x = Math.round(pos.x);
     let y = Math.round(pos.y);
     let z = Math.round(pos.z);
-    
-    
+
     const bounds = getBounds(data.XYZI);
     const limit = inputs.boundsLimit;
 
-    if(bounds.max.x - bounds.min.x > limit || bounds.max.y - bounds.min.y > limit || bounds.max.z - bounds.min.z > limit){
-        console.error("Model size exceeds allowed bounds")
+    const dx = bounds.max.x - bounds.min.x;
+    const dy = bounds.max.y - bounds.min.y;
+    const dz = bounds.max.z - bounds.min.z;
+    const maxBound = Math.max(dx, dy, dz);
+
+    if (maxBound > limit) {
+        console.error(
+            "Model size exceeds allowed bounds, max bound:",
+            maxBound
+        );
         return;
     }
-    
+
     for (const voxel of data.XYZI) {
         const xx = x + voxel.x - bounds.min.x;
         const yy = y + voxel.z - bounds.min.z;
