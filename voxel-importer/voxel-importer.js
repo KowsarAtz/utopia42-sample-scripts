@@ -1,17 +1,5 @@
 const baseParams = [
     {
-        label: "Block Type",
-        name: "blockType",
-        type: "blockType",
-        required: true,
-    },
-    {
-        label: "Starting Position",
-        name: "startingPosition",
-        type: "position",
-        required: true,
-    },
-    {
         label: "Parser Script URL",
         name: "parserUrl",
         type: "text",
@@ -28,15 +16,21 @@ const baseParams = [
             "https://cdn.jsdelivr.net/gh/KowsarAtz/utopia42-sample-scripts@69c23508f1611b46077f0f784c76be009df403ee/voxel-importer/vox-samples/castle.vox",
     },
     {
+        label: "Starting Position",
+        name: "startingPosition",
+        type: "position",
+        required: true,
+    },
+    {
         label: "Voxel Model Bounds Limit",
         name: "boundsLimit",
         type: "number",
         required: true,
-        defaultValue: 50,
+        defaultValue: 40,
     },
 ];
 
-function getBounds(voxels) {
+function getDetails(voxels) {
     let maxX = -Infinity;
     let maxY = -Infinity;
     let maxZ = -Infinity;
@@ -44,6 +38,8 @@ function getBounds(voxels) {
     let minX = Infinity;
     let minY = Infinity;
     let minZ = Infinity;
+
+    const uniqueColorIndices = [];
 
     for (const voxel of voxels) {
         minX = voxel.x < minX ? voxel.x : minX;
@@ -53,10 +49,13 @@ function getBounds(voxels) {
         maxX = voxel.x > maxX ? voxel.x : maxX;
         maxY = voxel.y > maxY ? voxel.y : maxY;
         maxZ = voxel.z > maxZ ? voxel.z : maxZ;
+
+        if (!(voxel.i in uniqueColorIndices)) uniqueColorIndices.push(voxel.i);
     }
     return {
         min: { x: minX, y: minY, z: minZ },
         max: { x: maxX, y: maxY, z: maxZ },
+        uniqueColorIndices: uniqueColorIndices,
     };
 }
 
@@ -67,36 +66,52 @@ async function main() {
         await fetch(new Request(inputs.voxUrl))
     ).arrayBuffer();
     const data = vox.parseMagicaVoxel(buffer);
+    const colors = data.RGBA;
 
     const pos = inputs.startingPosition;
     let x = Math.round(pos.x);
     let y = Math.round(pos.y);
     let z = Math.round(pos.z);
 
-    const bounds = getBounds(data.XYZI);
+    const details = getDetails(data.XYZI);
     const limit = inputs.boundsLimit;
 
-    const dx = bounds.max.x - bounds.min.x;
-    const dy = bounds.max.y - bounds.min.y;
-    const dz = bounds.max.z - bounds.min.z;
+    const dx = details.max.x - details.min.x;
+    const dy = details.max.y - details.min.y;
+    const dz = details.max.z - details.min.z;
     const maxBound = Math.max(dx, dy, dz);
 
     if (maxBound > limit) {
         console.error(
-            "Model size exceeds allowed bounds, max bound:",
+            "Model size exceeds allowed details, max bound:",
             maxBound
         );
         return;
     }
 
+    // handle colors
+    const middleExecutionInputs = [];
+    for (const index of details.uniqueColorIndices) {
+        const color = colors[index];
+        middleExecutionInputs.push({
+            label: `<div style="width:20px; height:20px; background:rgba(${color.r},${color.g},${color.b},${color.a});"></div>`,
+            name: "bt" + index,
+            type: "blockType",
+            required: true,
+        });
+    }
+    const blockTypeInputs = await UtopiaApi.getInputsFromUser(
+        middleExecutionInputs
+    );
+
     for (const voxel of data.XYZI) {
-        const xx = x + voxel.x - bounds.min.x;
-        const yy = y + voxel.z - bounds.min.z;
-        const zz = z + voxel.y - bounds.min.y;
+        const xx = x + voxel.x - details.min.x;
+        const yy = y + voxel.z - details.min.z;
+        const zz = z + voxel.y - details.min.y;
 
         try {
             const res = await UtopiaApi.placeBlock(
-                inputs.blockType,
+                blockTypeInputs["bt" + voxel.i],
                 xx,
                 yy,
                 zz
