@@ -16,21 +16,23 @@ const baseParams = [
         name: "parserUrl",
         type: "text",
         required: true,
-        defaultValue: "https://cdn.jsdelivr.net/gh/KowsarAtz/utopia42-sample-scripts@69c23508f1611b46077f0f784c76be009df403ee/voxel-importer/parser-lib.js"
+        defaultValue:
+            "https://cdn.jsdelivr.net/gh/KowsarAtz/utopia42-sample-scripts@69c23508f1611b46077f0f784c76be009df403ee/voxel-importer/parser-lib.js",
     },
     {
         label: "Voxel File URL",
         name: "voxUrl",
         type: "text",
         required: true,
-        defaultValue: "https://cdn.jsdelivr.net/gh/KowsarAtz/utopia42-sample-scripts@69c23508f1611b46077f0f784c76be009df403ee/voxel-importer/vox-samples/castle.vox"
+        defaultValue:
+            "https://cdn.jsdelivr.net/gh/KowsarAtz/utopia42-sample-scripts@69c23508f1611b46077f0f784c76be009df403ee/voxel-importer/vox-samples/castle.vox",
     },
     {
         label: "Voxel Model Bounds Limit",
         name: "boundsLimit",
         type: "number",
         required: true,
-        defaultValue: 50
+        defaultValue: 50,
     },
 ];
 
@@ -92,9 +94,20 @@ async function main() {
         const yy = y + voxel.z - bounds.min.z;
         const zz = z + voxel.y - bounds.min.y;
 
-        const res = await UtopiaApi.placeBlock(inputs.blockType, xx, yy, zz);
-        console.log(
-            "Placed block at " + xx + ", " + yy + ", " + zz + ": " + res
-        );
+        try {
+            const res = await UtopiaApi.placeBlock(
+                inputs.blockType,
+                xx,
+                yy,
+                zz
+            );
+            console.log(
+                "Placed block at " + xx + ", " + yy + ", " + zz + ": " + res
+            );
+        } catch (e) {
+            console.error(
+                "Place block failed at " + xx + ", " + yy + ", " + zz + ": " + e
+            );
+        }
     }
 }
