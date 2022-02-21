@@ -95,7 +95,7 @@ async function main() {
     for (const index of details.uniqueColorIndices) {
         const color = colors[index];
         middleExecutionInputs.push({
-            label: `<div style="width:20px; height:20px; background:rgba(${color.r},${color.g},${color.b},${color.a});"></div>`,
+            label: `<div style="width:20px; height:20px; background:rgba(${color.r},${color.g},${color.b},${color.a}); border:1px solid black;"></div>`,
             name: "bt" + index,
             type: "blockType",
             required: true,
