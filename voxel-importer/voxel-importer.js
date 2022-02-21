@@ -50,7 +50,8 @@ function getDetails(voxels) {
         maxY = voxel.y > maxY ? voxel.y : maxY;
         maxZ = voxel.z > maxZ ? voxel.z : maxZ;
 
-        if (!(voxel.c in uniqueColorIndices)) uniqueColorIndices.push(voxel.c);
+        if (uniqueColorIndices.indexOf(voxel.c) == -1)
+            uniqueColorIndices.push(voxel.c);
     }
     return {
         min: { x: minX, y: minY, z: minZ },
