@@ -2,7 +2,7 @@ async function main(){
     importScripts("https://cdn.jsdelivr.net/gh/KowsarAtz/utopia42-sample-scripts@main/parser-samples/scriptjs-test/bundle.js");
     var myRequest = new Request('https://cdn.jsdelivr.net/gh/ephtracy/voxel-model@master/vox/monument/monu1.vox');
     const buffer = await (await fetch(myRequest)).arrayBuffer();
-    const vox = vox.parseMagicaVoxel(buffer);
+    const vx = vox.parseMagicaVoxel(buffer);
 
     const pos = await UtopiaApi.getPlayerPosition();
 
@@ -12,7 +12,7 @@ async function main(){
 
     console.log("Starting position: " + pos.x + ", " + pos.y + ", " + pos.z);
 
-    for (const blockPos of vox.XYZI) {
+    for (const blockPos of vx.XYZI) {
         const xx = x + blockPos.x;
         const yy = y + blockPos.z;
         const zz = z + blockPos.y;
