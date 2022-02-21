@@ -33,7 +33,7 @@ function getVoxelsMins(voxels) {
 
 async function main() {
     importScripts("https://cdn.jsdelivr.net/gh/KowsarAtz/utopia42-sample-scripts@main/parser-samples/scriptjs-test/bundle.js");
-    const inputs = await UtopiaApi.getinputsFromUser(baseParams);
+    const inputs = await UtopiaApi.getInputsFromUser(baseParams);
     const buffer = await (await fetch(new Request(inputs.voxUrl))).arrayBuffer();
     const data = vox.parseMagicaVoxel(buffer);
 
