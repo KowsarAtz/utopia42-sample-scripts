@@ -5,7 +5,7 @@ const baseParams = [
         type: "text",
         required: true,
         defaultValue:
-            "https://cdn.jsdelivr.net/gh/KowsarAtz/utopia42-sample-scripts@69c23508f1611b46077f0f784c76be009df403ee/voxel-importer/parser-lib.js",
+            "https://cdn.jsdelivr.net/gh/Navid-Fkh/utopia42-sample-scripts@0b337d685741982b325f43b9d9621565109be988/vox-import/parser-lib.js",
     },
     {
         label: "Voxel File URL",
@@ -22,19 +22,15 @@ const baseParams = [
         required: true,
     },
     {
-        label: "Voxel Model Bounds Limit",
-        name: "boundsLimit",
+        label: "Total Voxels Limit",
+        name: "voxelsCountLimit",
         type: "number",
         required: true,
-        defaultValue: 40,
+        defaultValue: 1500,
     },
 ];
 
 function getDetails(voxels) {
-    let maxX = -Infinity;
-    let maxY = -Infinity;
-    let maxZ = -Infinity;
-
     let minX = Infinity;
     let minY = Infinity;
     let minZ = Infinity;
@@ -46,16 +42,11 @@ function getDetails(voxels) {
         minY = voxel.y < minY ? voxel.y : minY;
         minZ = voxel.z < minZ ? voxel.z : minZ;
 
-        maxX = voxel.x > maxX ? voxel.x : maxX;
-        maxY = voxel.y > maxY ? voxel.y : maxY;
-        maxZ = voxel.z > maxZ ? voxel.z : maxZ;
-
         if (uniqueColorIndices.indexOf(voxel.c) == -1)
             uniqueColorIndices.push(voxel.c);
     }
     return {
         min: { x: minX, y: minY, z: minZ },
-        max: { x: maxX, y: maxY, z: maxZ },
         uniqueColorIndices: uniqueColorIndices,
     };
 }
@@ -67,30 +58,19 @@ async function main() {
         await fetch(new Request(inputs.voxUrl))
     ).arrayBuffer();
     const data = vox.parseMagicaVoxel(buffer);
-    const colors = data.RGBA;
+
+    if (data.XYZI.length > inputs.voxelsCountLimit) {
+        throw new Error(`Model has a total of ${data.XYZI.length} voxels which is more than the allowed number of voxels (${inputs.voxelsCountLimit})`)
+    }
 
     const pos = inputs.startingPosition;
     let x = Math.round(pos.x);
     let y = Math.round(pos.y);
     let z = Math.round(pos.z);
-
+    
+    const colors = data.RGBA;
     const details = getDetails(data.XYZI);
-    const limit = inputs.boundsLimit;
 
-    const dx = details.max.x - details.min.x;
-    const dy = details.max.y - details.min.y;
-    const dz = details.max.z - details.min.z;
-    const maxBound = Math.max(dx, dy, dz);
-
-    if (maxBound > limit) {
-        console.error(
-            "Model size exceeds allowed details, max bound:",
-            maxBound
-        );
-        return;
-    }
-
-    // handle colors
     const middleExecutionInputs = [];
     for (const index of details.uniqueColorIndices) {
         const color = colors[index];
