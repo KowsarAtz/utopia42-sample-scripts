@@ -21,6 +21,12 @@ const baseParams = [
         type: "position",
         required: true,
     },
+    {
+        label: "Batch Size",
+        name: "batchSize",
+        type: "number",
+        required: true,
+    },
 ];
 
 function getDetails(voxels) {
@@ -57,22 +63,22 @@ async function main() {
     let y = Math.round(pos.y);
     let z = Math.round(pos.z);
 
-    const colors = data.RGBA;
+    // const colors = data.RGBA;
     const details = getDetails(data.XYZI);
 
-    const middleExecutionInputs = [];
-    for (const index of details.uniqueColorIndices) {
-        const color = colors[index];
-        middleExecutionInputs.push({
-            label: `<div style="width:20px; height:20px; background:rgba(${color.r},${color.g},${color.b},${color.a}); border:1px solid black;"></div>`,
-            name: "bt" + index,
-            type: "blockType",
-            required: true,
-        });
-    }
-    const blockTypeInputs = await UtopiaApi.getInputsFromUser(
-        middleExecutionInputs
-    );
+    // const middleExecutionInputs = [];
+    // for (const index of details.uniqueColorIndices) {
+    //     const color = colors[index];
+    //     middleExecutionInputs.push({
+    //         label: `<div style="width:20px; height:20px; background:rgba(${color.r},${color.g},${color.b},${color.a}); border:1px solid black;"></div>`,
+    //         name: "bt" + index,
+    //         type: "blockType",
+    //         required: true,
+    //     });
+    // }
+    // const blockTypeInputs = await UtopiaApi.getInputsFromUser(
+    //     middleExecutionInputs
+    // );
 
     const reqs = [];
 
@@ -82,7 +88,7 @@ async function main() {
         const zz = z + voxel.y - details.min.y;
 
         reqs.push({
-            type: blockTypeInputs["bt" + voxel.c],
+            type: "stone",
             position: {
                 x: xx,
                 y: yy,
@@ -92,7 +98,7 @@ async function main() {
     }
 
     while (reqs.length > 0) {
-        const res = await UtopiaApi.placeBlocks(reqs.splice(0, 10000));
+        const res = await UtopiaApi.placeBlocks(reqs.splice(0, inputs.batchSize));
         const failed = [];
         let success = 0;
         for (const position of Object.keys(res)) {
