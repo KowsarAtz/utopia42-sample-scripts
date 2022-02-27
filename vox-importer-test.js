@@ -92,7 +92,7 @@ async function main() {
     }
 
     while (reqs.length > 0) {
-        const res = await UtopiaApi.placeBlocks(reqs.splice(0, 4000));
+        const res = await UtopiaApi.placeBlocks(reqs.splice(0, 20000));
         const failed = [];
         let success = 0;
         for (const position of Object.keys(res)) {
