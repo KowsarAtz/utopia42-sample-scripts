@@ -5,7 +5,7 @@ const baseParams = [
         type: "text",
         required: true,
         defaultValue:
-            "https://cdn.jsdelivr.net/gh/Navid-Fkh/utopia42-sample-scripts@0b337d685741982b325f43b9d9621565109be988/vox-import/parser-lib.js",
+            "https://cdn.jsdelivr.net/gh/Utopia42-club/plugins@1adc37a0d3c00d008856753e921419fe923f5701/vox-import/parser-lib.js",
     },
     {
         label: "Voxel File URL",
@@ -13,20 +13,13 @@ const baseParams = [
         type: "text",
         required: true,
         defaultValue:
-            "https://cdn.jsdelivr.net/gh/ephtracy/voxel-model@master/vox/character/chr_sword.vox",
+            "https://cdn.jsdelivr.net/gh/ephtracy/voxel-model@master/vox/character/chr_mom.vox",
     },
     {
         label: "Starting Position",
         name: "startingPosition",
         type: "position",
         required: true,
-    },
-    {
-        label: "Total Voxels Limit",
-        name: "voxelsCountLimit",
-        type: "number",
-        required: true,
-        defaultValue: 1500,
     },
 ];
 
@@ -59,12 +52,6 @@ async function main() {
     ).arrayBuffer();
     const data = vox.parseMagicaVoxel(buffer);
 
-    if (data.XYZI.length > inputs.voxelsCountLimit) {
-        throw new Error(
-            `Model has a total of ${data.XYZI.length} voxels which is more than the allowed number of voxels (${inputs.voxelsCountLimit})`
-        );
-    }
-
     const pos = inputs.startingPosition;
     let x = Math.round(pos.x);
     let y = Math.round(pos.y);
@@ -87,30 +74,49 @@ async function main() {
         middleExecutionInputs
     );
 
+    const reqs = [];
+
     for (const voxel of data.XYZI) {
         const xx = x + voxel.x - details.min.x;
         const yy = y + voxel.z - details.min.z;
         const zz = z + voxel.y - details.min.y;
 
-        let res;
-        try {
-            res = await UtopiaApi.placeBlock(
-                blockTypeInputs["bt" + voxel.c],
-                xx,
-                yy,
-                zz
-            );
-        } catch (e) {
-            console.error(
-                "Place block failed at " +
-                    xx +
-                    ", " +
-                    yy +
-                    ", " +
-                    zz +
-                    ": " +
-                    res
-            );
-        }
+        reqs.push({
+            type: blockTypeInputs["bt" + voxel.c],
+            position: {
+                x: xx,
+                y: yy,
+                z: zz,
+            },
+        });
     }
+
+    while (reqs.length > 0) {
+        const res = await UtopiaApi.placeBlocks(reqs.splice(0, 8000));
+        const failed = [];
+        let success = 0;
+        for (const position of Object.keys(res)) {
+            if (res[position]) success++;
+            else failed.push(position);
+        }
+        console.log(
+            `Placed ${success} out of ${Object.keys(res).length} blocks.`
+        );
+        if (failed.length > 0)
+            console.warn(
+                "Failed to place block at following positions",
+                failed
+            );
+    }
+
+    // const res = await UtopiaApi.placeBlocks(reqs);
+    // const failed = [];
+    // let success = 0;
+    // for (const position of Object.keys(res)) {
+    //     if (res[position]) success++;
+    //     else failed.push(position);
+    // }
+    // console.log(`Placed ${success} out of ${Object.keys(res).length} blocks.`);
+    // if (failed.length > 0)
+    //     console.warn("Failed to place block at following positions", failed);
 }
