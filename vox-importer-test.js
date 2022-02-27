@@ -13,7 +13,7 @@ const baseParams = [
         type: "text",
         required: true,
         defaultValue:
-            "https://cdn.jsdelivr.net/gh/ephtracy/voxel-model@master/vox/character/chr_mom.vox",
+            "https://cdn.jsdelivr.net/gh/ephtracy/voxel-model@master/vox/monument/monu1.vox",
     },
     {
         label: "Starting Position",
