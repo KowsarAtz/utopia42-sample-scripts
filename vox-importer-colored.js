@@ -23,6 +23,20 @@ const baseParams = [
     },
 ];
 
+const getHexStr = (x) => {
+    if (x < 10) return x.toString();
+    if (x == 10) return "a";
+    if (x == 11) return "b";
+    if (x == 12) return "c";
+    if (x == 13) return "d";
+    if (x == 14) return "e";
+    if (x == 15) return "f";
+};
+
+const intToHex = (x) => {
+    return `${getHexStr(Math.floor(x / 16))}${getHexStr(x % 16)}`;
+};
+
 function getDetails(voxels) {
     let minX = Infinity;
     let minY = Infinity;
@@ -52,10 +66,7 @@ async function main() {
     let z = Math.round(pos.z);
 
     const colors = data.RGBA.map((color) => {
-        return "#" + [color.r, color.g, color.b].map((x) => {
-            parseInt(x).toString(16);
-            return x.length == 1 ? "0" + x : x;
-        }).join("");
+        return "#" + [color.r, color.g, color.b].map(getHexStr).join("");
     });
     const details = getDetails(data.XYZI);
 
