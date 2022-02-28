@@ -66,7 +66,7 @@ async function main() {
     let z = Math.round(pos.z);
 
     const colors = data.RGBA.map((color) => {
-        return "#" + [color.r, color.g, color.b].map(getHexStr).join("");
+        return "#" + [color.r, color.g, color.b].map(intToHex).join("");
     });
     const details = getDetails(data.XYZI);
 
