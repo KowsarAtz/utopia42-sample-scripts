@@ -634,5 +634,5 @@ const nftWallData = [
 async function main() {
     console.log("building nft wall")
     const result = await rxjs.firstValueFrom(UtopiaApi.placeMetaBlocks(nftWallData));
-    console.log(result);
+    console.log("result", result);
 }
