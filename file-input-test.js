@@ -8,7 +8,7 @@ const baseParams = [
 
 
 async function main() {
-    const inputs = await rxjs.firstValueFrom(UtopiaApi.getInputsFromUser(baseParams));
+    const inputs = await rxjs.firstValueFrom(UtopiaApi.getInputsFromUser({inputs: baseParams}));
     console.log(inputs.voxFile);
     console.log(inputs.voxFile._files[0]);
 }
