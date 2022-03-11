@@ -60,30 +60,42 @@ async function main() {
 
     // console.log("inputs", inputs);
 
-    const response = await fetch("https://ipfs.infura.io/ipfs/QmS5ZRmRcG5Mqv7XvQ3EEFZoY2eKRri8NWjRYU33cCM9Rt", {
-        method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        mode: 'no-cors', // no-cors, *cors, same-origin
-        // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        // credentials: 'same-origin', // include, *same-origin, omit
-        // headers: {
-        //   'Content-Type': 'application/json'
-        //   // 'Content-Type': 'application/x-www-form-urlencoded',
-        // },
-        // redirect: 'follow', // manual, *follow, error
-        // referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        // body: JSON.stringify(data) // body data type must match "Content-Type" header
-    });
+    const response = await fetch(
+        "https://ipfs.infura.io/ipfs/QmS5ZRmRcG5Mqv7XvQ3EEFZoY2eKRri8NWjRYU33cCM9Rt",
+        {
+            method: "GET", // *GET, POST, PUT, DELETE, etc.
+            mode: "no-cors", // no-cors, *cors, same-origin
+            // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            // credentials: 'same-origin', // include, *same-origin, omit
+            // headers: {
+            //   'Content-Type': 'application/json'
+            //   // 'Content-Type': 'application/x-www-form-urlencoded',
+            // },
+            // redirect: 'follow', // manual, *follow, error
+            // referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            // body: JSON.stringify(data) // body data type must match "Content-Type" header
+        }
+    );
 
-    console.log(response)
-    console.log(response.body)
+    console.log(response);
+    console.log(response.body);
     
+    const first = await fetch(
+        new Request(
+            "https://ipfs.infura.io/ipfs/QmS5ZRmRcG5Mqv7XvQ3EEFZoY2eKRri8NWjRYU33cCM9Rt"
+        )
+    );
+
+    console.log(first)
+    console.log(first.body)
+
     return;
 
     request(inputs.voxUrl, (error, result, body) => {
         console.log(error);
         console.log(result);
         console.log(body);
-    })
+    });
 
     const buffer = await (
         await fetch(new Request(inputs.voxUrl))
