@@ -55,12 +55,12 @@ function getDetails(voxels) {
 // var request = require("request");
 
 async function main() {
-    const inputs = await rxjs.firstValueFrom(await UtopiaApi.getInputsFromUser(baseParams));
+    // const inputs = await rxjs.firstValueFrom(await UtopiaApi.getInputsFromUser(baseParams));
     // importScripts(inputs.parserUrl);
 
-    console.log("inputs", inputs);
+    // console.log("inputs", inputs);
 
-    const response = await fetch(inputs.voxUrl, {
+    const response = await fetch("https://github.com/ephtracy/voxel-model/raw/master/vox/monument/monu1.vox", {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
         mode: 'no-cors', // no-cors, *cors, same-origin
         // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
