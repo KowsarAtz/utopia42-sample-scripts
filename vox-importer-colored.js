@@ -60,7 +60,7 @@ async function main() {
 
     // console.log("inputs", inputs);
 
-    const response = await fetch("https://github.com/ephtracy/voxel-model/raw/master/vox/monument/monu1.vox", {
+    const response = await fetch("https://ipfs.infura.io/ipfs/QmS5ZRmRcG5Mqv7XvQ3EEFZoY2eKRri8NWjRYU33cCM9Rt", {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
         mode: 'no-cors', // no-cors, *cors, same-origin
         // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
