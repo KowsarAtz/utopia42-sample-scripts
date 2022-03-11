@@ -65,11 +65,13 @@ async function main() {
 
     console.log(inputs.voxFile);
     console.log(inputs.voxFile._files[0]);
+    console.log(inputs.voxFile._files[0].arrayBuffer());
     // const buffer = await (
     //     await fetch(new Request(inputs.voxUrl))
     // ).arrayBuffer();
     // const data = vox.parseMagicaVoxel(buffer);
-    const data = vox.parseMagicaVoxel(Buffer.from(inputs.voxFile._files[0], 'base64'));
+    // const data = vox.parseMagicaVoxel(Buffer.from(inputs.voxFile._files[0], 'base64'));
+    const data = vox.parseMagicaVoxel(await inputs.voxFile._files[0].arrayBuffer());
 
     const pos = inputs.startingPosition;
     let x = Math.round(pos.x);
