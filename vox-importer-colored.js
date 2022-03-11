@@ -54,11 +54,10 @@ async function main() {
         inputs: baseParams,
         gridDescriptor: {
             rows: [
-              ["parserUrl", "parserUrl"],
-              ["voxFile", "voxFile"],
+              ["parserUrl", "parserUrl", "parserUrl"],
+              ["voxFile", "voxFile", "voxFile"],
               ["startingPosition"]
-            ],
-            templateColumns: "350px",
+            ]
         },
     }));
     importScripts(inputs.parserUrl);
