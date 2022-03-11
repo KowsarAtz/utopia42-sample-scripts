@@ -55,7 +55,7 @@ function getDetails(voxels) {
 // var request = require("request");
 
 async function main() {
-    const inputs = await UtopiaApi.getInputsFromUser(baseParams);
+    const inputs = await rxjs.firstValueFrom(await UtopiaApi.getInputsFromUser(baseParams));
     // importScripts(inputs.parserUrl);
 
     console.log("inputs", inputs);
