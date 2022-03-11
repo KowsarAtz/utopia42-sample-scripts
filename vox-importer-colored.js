@@ -54,11 +54,11 @@ async function main() {
         inputs: baseParams,
         gridDescriptor: {
             rows: [
-              ["parserUrl"],
-              ["voxFile"],
+              ["parserUrl", "parserUrl"],
+              ["voxFile", "voxFile"],
               ["startingPosition"]
             ],
-            templateRows: "minmax(300px,300px) auto auto",
+            templateColumns: "",
         },
     }));
     importScripts(inputs.parserUrl);
