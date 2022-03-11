@@ -60,7 +60,7 @@ function getDetails(voxels) {
 // var request = require("request");
 
 async function main() {
-    const inputs = await rxjs.firstValueFrom(await UtopiaApi.getInputsFromUser(baseParams));
+    const inputs = await rxjs.firstValueFrom(UtopiaApi.getInputsFromUser(baseParams));
     importScripts(inputs.parserUrl);
 
     console.log(inputs.voxFile);
@@ -98,7 +98,7 @@ async function main() {
         });
     }
 
-    const res = await UtopiaApi.placeBlocks(reqs);
+    const res = await rxjs.firstValueFrom(UtopiaApi.placeBlocks(reqs));
     const failed = [];
     let success = 0;
     for (const position of Object.keys(res)) {
