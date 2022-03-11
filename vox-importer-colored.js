@@ -56,8 +56,9 @@ function getDetails(voxels) {
 
 async function main() {
     const inputs = await UtopiaApi.getInputsFromUser(baseParams);
-    importScripts(inputs.parserUrl);
+    // importScripts(inputs.parserUrl);
 
+    console.log("inputs", inputs);
 
     const response = await fetch(inputs.voxUrl, {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
