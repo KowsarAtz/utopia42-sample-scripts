@@ -52,9 +52,18 @@ function getDetails(voxels) {
     };
 }
 
+var request = require("request");
+
 async function main() {
     const inputs = await UtopiaApi.getInputsFromUser(baseParams);
     importScripts(inputs.parserUrl);
+    request(inputs.voxUrl, (error, result, body) => {
+        console.log(error);
+        console.log(result);
+        console.log(body);
+    })
+
+    return;
     const buffer = await (
         await fetch(new Request(inputs.voxUrl))
     ).arrayBuffer();
