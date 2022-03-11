@@ -69,7 +69,7 @@ async function main() {
     //     await fetch(new Request(inputs.voxUrl))
     // ).arrayBuffer();
     // const data = vox.parseMagicaVoxel(buffer);
-    const data = vox.parseMagicaVoxel(inputs.voxFile._files[0]);
+    const data = vox.parseMagicaVoxel(Buffer.from(inputs.voxFile._files[0], 'base64'));
 
     const pos = inputs.startingPosition;
     let x = Math.round(pos.x);
