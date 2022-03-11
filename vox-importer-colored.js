@@ -52,7 +52,7 @@ function getDetails(voxels) {
     };
 }
 
-var request = require("request");
+// var request = require("request");
 
 async function main() {
     const inputs = await UtopiaApi.getInputsFromUser(baseParams);
