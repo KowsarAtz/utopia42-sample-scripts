@@ -7,13 +7,18 @@ const baseParams = [
         defaultValue:
             "https://cdn.jsdelivr.net/gh/Utopia42-club/plugins@1adc37a0d3c00d008856753e921419fe923f5701/vox-import/parser-lib.js",
     },
+    // {
+    //     label: "Voxel File URL",
+    //     name: "voxUrl",
+    //     type: "text",
+    //     required: true,
+    //     defaultValue:
+    //         "https://cdn.jsdelivr.net/gh/ephtracy/voxel-model@master/vox/character/chr_mom.vox",
+    // },
     {
-        label: "Voxel File URL",
-        name: "voxUrl",
-        type: "text",
-        required: true,
-        defaultValue:
-            "https://cdn.jsdelivr.net/gh/ephtracy/voxel-model@master/vox/character/chr_mom.vox",
+        label: "Voxel File",
+        name: "voxFile",
+        type: "file",
     },
     {
         label: "Starting Position",
@@ -55,50 +60,14 @@ function getDetails(voxels) {
 // var request = require("request");
 
 async function main() {
-    // const inputs = await rxjs.firstValueFrom(await UtopiaApi.getInputsFromUser(baseParams));
-    // importScripts(inputs.parserUrl);
+    const inputs = await rxjs.firstValueFrom(await UtopiaApi.getInputsFromUser(baseParams));
+    importScripts(inputs.parserUrl);
 
-    // console.log("inputs", inputs);
-
-    const response = await fetch(
-        "https://ipfs.infura.io/ipfs/QmS5ZRmRcG5Mqv7XvQ3EEFZoY2eKRri8NWjRYU33cCM9Rt",
-        {
-            method: "GET", // *GET, POST, PUT, DELETE, etc.
-            mode: "no-cors", // no-cors, *cors, same-origin
-            // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            // credentials: 'same-origin', // include, *same-origin, omit
-            // headers: {
-            //   'Content-Type': 'application/json'
-            //   // 'Content-Type': 'application/x-www-form-urlencoded',
-            // },
-            // redirect: 'follow', // manual, *follow, error
-            // referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            // body: JSON.stringify(data) // body data type must match "Content-Type" header
-        }
-    );
-
-    console.log(response);
-    console.log(response.body);
-    
-    const first = await fetch(
-        new Request(
-            "https://ipfs.infura.io/ipfs/QmS5ZRmRcG5Mqv7XvQ3EEFZoY2eKRri8NWjRYU33cCM9Rt"
-        )
-    );
-
-    console.log(first)
-    console.log(first.body)
-
-    return;
-
-    request(inputs.voxUrl, (error, result, body) => {
-        console.log(error);
-        console.log(result);
-        console.log(body);
-    });
-
+    console.log(inputs.voxFile);
+    console.log(inputs.voxFile._files[0]);
     const buffer = await (
-        await fetch(new Request(inputs.voxUrl))
+        // await fetch(new Request(inputs.voxUrl))
+        inputs.voxFile._files[0]
     ).arrayBuffer();
     const data = vox.parseMagicaVoxel(buffer);
 
