@@ -60,16 +60,16 @@ function getDetails(voxels) {
 // var request = require("request");
 
 async function main() {
-    const inputs = await rxjs.firstValueFrom(UtopiaApi.getInputsFromUser(baseParams));
+    const inputs = await rxjs.firstValueFrom(UtopiaApi.getInputsFromUser({inputs: baseParams}));
     importScripts(inputs.parserUrl);
 
     console.log(inputs.voxFile);
     console.log(inputs.voxFile._files[0]);
-    const buffer = await (
-        // await fetch(new Request(inputs.voxUrl))
-        inputs.voxFile._files[0]
-    ).arrayBuffer();
-    const data = vox.parseMagicaVoxel(buffer);
+    // const buffer = await (
+    //     await fetch(new Request(inputs.voxUrl))
+    // ).arrayBuffer();
+    // const data = vox.parseMagicaVoxel(buffer);
+    const data = vox.parseMagicaVoxel(inputs.voxFile._files[0]);
 
     const pos = inputs.startingPosition;
     let x = Math.round(pos.x);
