@@ -58,7 +58,7 @@ async function main() {
               ["voxFile", "voxFile"],
               ["startingPosition"]
             ],
-            templateColumns: "",
+            templateColumns: "350px",
         },
     }));
     importScripts(inputs.parserUrl);
