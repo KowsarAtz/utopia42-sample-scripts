@@ -7,14 +7,6 @@ const baseParams = [
         defaultValue:
             "https://cdn.jsdelivr.net/gh/Utopia42-club/plugins@1adc37a0d3c00d008856753e921419fe923f5701/vox-import/parser-lib.js",
     },
-    // {
-    //     label: "Voxel File URL",
-    //     name: "voxUrl",
-    //     type: "text",
-    //     required: true,
-    //     defaultValue:
-    //         "https://cdn.jsdelivr.net/gh/ephtracy/voxel-model@master/vox/character/chr_mom.vox",
-    // },
     {
         label: "Voxel File",
         name: "voxFile",
@@ -57,20 +49,19 @@ function getDetails(voxels) {
     };
 }
 
-// var request = require("request");
-
 async function main() {
-    const inputs = await rxjs.firstValueFrom(UtopiaApi.getInputsFromUser({inputs: baseParams}));
+    const inputs = await rxjs.firstValueFrom(UtopiaApi.getInputsFromUser({
+        inputs: baseParams,
+        gridDescriptor: {
+            rows: [
+              ["parserUrl"],
+              ["voxFile"],
+              ["startingPosition"]
+            ],
+            templateRows: "minmax(300px,300px) auto auto",
+        },
+    }));
     importScripts(inputs.parserUrl);
-
-    console.log(inputs.voxFile);
-    console.log(inputs.voxFile._files[0]);
-    console.log(inputs.voxFile._files[0].arrayBuffer());
-    // const buffer = await (
-    //     await fetch(new Request(inputs.voxUrl))
-    // ).arrayBuffer();
-    // const data = vox.parseMagicaVoxel(buffer);
-    // const data = vox.parseMagicaVoxel(Buffer.from(inputs.voxFile._files[0], 'base64'));
     const data = vox.parseMagicaVoxel(await inputs.voxFile._files[0].arrayBuffer());
 
     const pos = inputs.startingPosition;
@@ -91,7 +82,9 @@ async function main() {
         const zz = z + voxel.y - details.min.y;
 
         reqs.push({
-            type: colors[voxel.c],
+            type: {
+                blockType: colors[voxel.c]
+            },
             position: {
                 x: xx,
                 y: yy,
