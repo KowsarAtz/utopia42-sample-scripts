@@ -1,5 +1,6 @@
 async function main() {
-    const nftWallData = [
+	```ts
+	const nftWallData = [
         {
             position: { x: -3066, y: 32, z: -860 },
             type: { blockType: "#ffffff" }
@@ -27,6 +28,7 @@ async function main() {
     ]
     let result = await rxjs.firstValueFrom(UtopiaApi.placeBlocks(nftWallData));
     // result --> result {(-3066, 32, -860): true, (-3066, 33, -860): true, (-3066, 34, -860): true}
+	```
 }
 
 
