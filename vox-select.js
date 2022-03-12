@@ -107,7 +107,14 @@ async function main() {
 
     failed = [];
     success = 0;
-    res = await rxjs.firstValueFrom(UtopiaApi.selectBlocks(Object.keys(res).filter(pos => res[pos])));
+    res = await rxjs.firstValueFrom(UtopiaApi.selectBlocks(Object.keys(res).filter(pos => res[pos]).map(posStr => {
+        const items = posStr.replace('(','').replace(')','').split(",");
+        return {
+            x: Number(items[0]),
+            y: Number(items[1]),
+            z: Number(items[2])
+        }
+    })));
     for (const position of Object.keys(res)) {
         if (res[position]) success++;
         else failed.push(position);
