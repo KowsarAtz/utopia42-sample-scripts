@@ -94,8 +94,8 @@ async function main() {
         });
     }
 
-    const res = await rxjs.firstValueFrom(UtopiaApi.placeBlocks(reqs));
-    const failed = [];
+    let res = await rxjs.firstValueFrom(UtopiaApi.placeBlocks(reqs));
+    let failed = [];
     let success = 0;
     for (const position of Object.keys(res)) {
         if (res[position]) success++;
