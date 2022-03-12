@@ -1,24 +1,24 @@
 const nftWallData = [
     {
-        position: { x: 0, y: 32, z: 0 },
+        position: { x: -3066, y: 32, z: -860 },
         type: { blockType: "#ffffff" }
     },
     {
-        position: { x: 0, y: 33, z: 0 },
+        position: { x: -3066, y: 33, z: -860 },
         type: { blockType: "#ffffff" }
     },
     {
-        position: { x: 0, y: 34, z: 0 },
+        position: { x: -3066, y: 34, z: -860 },
         type: {
             // blockType: "stone",
             metaBlock: {
                 type: "nft",
                 properties: {
                     back: {
-                        url: "https://lh3.googleusercontent.com/PmEaLtImJTLlgbJKgYenuMAo6e4UTM791ckWPx_zPixAEX6tDzcf5toRwYaRcXzY70W32JEgQjK14MFZZW16lZnbjEwHYN8kAI3GXQ=w600",
-                        marketUrl: "https://lh3.googleusercontent.com/PmEaLtImJTLlgbJKgYenuMAo6e4UTM791ckWPx_zPixAEX6tDzcf5toRwYaRcXzY70W32JEgQjK14MFZZW16lZnbjEwHYN8kAI3GXQ=w600",
+                        url: "https://ipfs.io/ipfs/Qmci1pGaUmvb6StPxdGp1WqfK9QjPjdf43nCbY5LJ9y1MY",
                         width: 2,
                         height: 2,
+                        marketUrl: "https://opensea.io/assets/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/4671",
                     },
                 },
             },
