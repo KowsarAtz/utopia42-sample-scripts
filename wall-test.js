@@ -10,7 +10,7 @@ const nftWallData = [
     {
         position: { x: -3066, y: 34, z: -860 },
         type: {
-            // blockType: "stone",
+            blockType: "stone",
             metaBlock: {
                 type: "nft",
                 properties: {
