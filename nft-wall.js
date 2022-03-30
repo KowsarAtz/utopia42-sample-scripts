@@ -104,17 +104,23 @@ async function main() {
         UtopiaApi.getPlayerPosition()
     );
 
+    const startingPosition = {
+        x: Math.floor(inputs.startingPosition.x),
+        y: Math.floor(inputs.startingPosition.y),
+        z: Math.floor(inputs.startingPosition.z),
+    }
+
     const wallRelativeStartingPosition = {
-        x: Math.floor(playerPosition.x) - inputs.startingPosition.x,
-        y: Math.floor(playerPosition.y) - inputs.startingPosition.y,
-        z: Math.floor(playerPosition.z) - inputs.startingPosition.z,
+        x: Math.floor(playerPosition.x) - startingPosition.x,
+        y: Math.floor(playerPosition.y) - startingPosition.y,
+        z: Math.floor(playerPosition.z) - startingPosition.z,
     };
 
     let side = "";
     const start = {
-        x: inputs.startingPosition.x,
-        y: inputs.startingPosition.y,
-        z: inputs.startingPosition.z,
+        x: startingPosition.x,
+        y: startingPosition.y,
+        z: startingPosition.z,
     };
 
     const wallWidth =
