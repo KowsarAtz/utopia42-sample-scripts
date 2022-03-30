@@ -154,7 +154,7 @@ async function main() {
 
     const nftWallData = [];
 
-    for (let y = wallHeight - 1; y > 0; y--)
+    for (let y = wallHeight - 1; y >= 0; y--)
         for (let w = 0; w < wallWidth; w++) {
             const pos = {
                 x: start.x + (drawAlongX ? w : 0),
@@ -176,6 +176,7 @@ async function main() {
 
             let metaBlock = null;
             if (attachMeta && inputs.items != null && inputs.items.length > 0) {
+                console.log("meta attached:", pos)
                 metaBlock = {
                     type: "nft",
                     properties: {},
