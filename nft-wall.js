@@ -154,8 +154,6 @@ async function main() {
 
     const nftWallData = [];
 
-    console.log("start", start);
-
     for (let y = 0; y < wallHeight; y++)
         for (let w = 0; w < wallWidth; w++) {
             const pos = {
@@ -163,17 +161,16 @@ async function main() {
                 z: start.z + (drawAlongX ? 0 : w),
                 y: start.y + y,
             };
-            console.log("pos", pos);
 
             const attachMeta =
                 (drawAlongX
-                    ? (pos.x - inputs.horizontalGap) %
+                    ? (w - inputs.horizontalGap) %
                           (inputs.horizontalGap + inputs.width) ==
                       0
-                    : (pos.z - inputs.horizontalGap) %
+                    : (w - inputs.horizontalGap) %
                           (inputs.horizontalGap + inputs.width) ==
                       0) ||
-                (pos.y - inputs.verticalGap) %
+                (y - inputs.verticalGap) %
                     (inputs.verticalGap + inputs.height) ==
                     0;
 
