@@ -98,8 +98,7 @@ const descriptor = {
                     }
                 ],
                 gridDescriptor: {
-                    rows: [["collection", "tokenId"]],
-                    templateColumns: "300px 100px",
+                    rows: [["collection", "collection", "collection", "tokenId"]],
                 },
             },
             isList: true,
