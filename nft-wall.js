@@ -11,49 +11,49 @@ const descriptor = {
             name: "wallBlockType",
             type: "blockType",
             required: true,
-            defaultValue: "stone"
+            defaultValue: "stone",
         },
         {
             label: "Image Width",
             name: "width",
             type: "number",
             required: true,
-            defaultValue: 3
+            defaultValue: 3,
         },
         {
             label: "Image Height",
             name: "height",
             type: "number",
             required: true,
-            defaultValue: 3
+            defaultValue: 3,
         },
         {
             label: "Horizontal Gap",
             name: "horizontalGap",
             type: "number",
             required: true,
-            defaultValue: 2
+            defaultValue: 2,
         },
         {
             label: "Vertical Gap",
             name: "verticalGap",
             type: "number",
             required: true,
-            defaultValue: 1
+            defaultValue: 1,
         },
         {
             label: "Rows Count",
             name: "rowsCount",
             type: "number",
             required: true,
-            defaultValue: 2
+            defaultValue: 2,
         },
         {
             label: "Columns Count",
             name: "columnsCount",
             type: "number",
             required: true,
-            defaultValue: 4
+            defaultValue: 4,
         },
         {
             label: "NFTs",
@@ -71,7 +71,7 @@ const descriptor = {
                     {
                         label: "Token ID",
                         name: "tokenId",
-                        type: "text",
+                        type: "number",
                         required: true,
                         defaultValue: "23309",
                     },
@@ -96,8 +96,102 @@ const descriptor = {
 };
 
 async function main() {
-    const inputs = await rxjs.firstValueFrom(UtopiaApi.getInputsFromUser(descriptor));
-    
+    const inputs = await rxjs.firstValueFrom(
+        UtopiaApi.getInputsFromUser(descriptor)
+    );
 
-    console.log(JSON.stringify(inputs));
+    const playerPosition = await rxjs.firstValueFrom(
+        UtopiaApi.getPlayerPosition()
+    );
+
+    const wallRelativeStartingPosition = {
+        x: Math.floor(playerPosition.x) - inputs.startingPosition.x,
+        y: Math.floor(playerPosition.y) - inputs.startingPosition.y,
+        z: Math.floor(playerPosition.z) - inputs.startingPosition.z,
+    };
+
+    let side = "";
+    const start = {
+        x: inputs.startingPosition.x,
+        y: inputs.startingPosition.y,
+        z: inputs.startingPosition.z,
+    };
+
+    const wallWidth =
+        (inputs.columnsCount + 1) * inputs.horizontalGap +
+        inputs.columnsCount * inputs.width;
+    const wallHeight =
+        (inputs.rowsCount + 1) * inputs.verticalGap +
+        inputs.rowsCount * inputs.height;
+
+    const drawAlongX = true;
+
+    if (
+        Math.abs(wallRelativeStartingPosition.x) >=
+        Math.abs(wallRelativeStartingPosition.z)
+    ) {
+        drawAlongX = false;
+        if (wallRelativeStartingPosition.x >= 0) {
+            side = "left";
+            start.z = start.z - wallWidth;
+        } else {
+            side = "right";
+        }
+    } else {
+        if (wallRelativeStartingPosition.z >= 0) {
+            side = "back";
+        } else {
+            side = "front";
+            start.x = start.x - wallWidth;
+        }
+    }
+
+    const nftWallData = [];
+
+    for (let y = 0; y < wallHeight; y++)
+        for (let w = 0; w < wallWidth; w++) {
+            const pos = {
+                x: start.x + drawAlongX ? w : 0,
+                x: start.x + drawAlongX ? 0 : w,
+                y: start.y + y,
+            };
+
+            const attachMeta =
+                (drawAlongX
+                    ? (pos.x - inputs.horizontalGap) %
+                          (inputs.horizontalGap + inputs.width) ==
+                      0
+                    : (pos.z - inputs.horizontalGap) %
+                          (inputs.horizontalGap + inputs.width) ==
+                      0) ||
+                (pos.y - inputs.verticalGap) %
+                    (inputs.verticalGap + inputs.height) ==
+                    0;
+
+            let metaBlock = null;
+            if (attachMeta && inputs.items != null && inputs.items.length > 0) {
+                metaBlock = {
+                    type: "nft",
+                    properties: {},
+                };
+
+                const nft = inputs.items.splice(0, 1)[0];
+                metaBlock.properties[side] = {
+                    collection: nft.collection,
+                    tokenId: nft.tokenId.toString(),
+                    width: inputs.width,
+                    height: inputs.height,
+                };
+            }
+
+            nftWallData.push({
+                position: pos,
+                type: !attachMeta
+                    ? null
+                    : {
+                          blockType: inputs.wallBlockType,
+                          metaBlock: metaBlock,
+                      },
+            });
+        }
 }
