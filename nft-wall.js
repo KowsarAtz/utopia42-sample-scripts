@@ -108,7 +108,7 @@ async function main() {
         x: Math.floor(inputs.startingPosition.x),
         y: Math.floor(inputs.startingPosition.y),
         z: Math.floor(inputs.startingPosition.z),
-    }
+    };
 
     const wallRelativeStartingPosition = {
         x: Math.floor(playerPosition.x) - startingPosition.x,
@@ -200,4 +200,8 @@ async function main() {
                       },
             });
         }
+    const result = await rxjs.firstValueFrom(
+        UtopiaApi.placeBlocks(nftWallData)
+    );
+    console.log(result);
 }
