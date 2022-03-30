@@ -111,9 +111,9 @@ async function main() {
     };
 
     const wallRelativeStartingPosition = {
-        x: Math.floor(playerPosition.x) - startingPosition.x,
-        y: Math.floor(playerPosition.y) - startingPosition.y,
-        z: Math.floor(playerPosition.z) - startingPosition.z,
+        x: startingPosition.x - Math.floor(playerPosition.x),
+        y: startingPosition.y - Math.floor(playerPosition.y),
+        z: startingPosition.z - Math.floor(playerPosition.z)
     };
 
     const start = {
