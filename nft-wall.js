@@ -154,7 +154,7 @@ async function main() {
 
     const nftWallData = [];
 
-    for (let y = 0; y < wallHeight; y++)
+    for (let y = wallHeight - 1; y > 0; y--)
         for (let w = 0; w < wallWidth; w++) {
             const pos = {
                 x: start.x + (drawAlongX ? w : 0),
@@ -169,7 +169,7 @@ async function main() {
                       0
                     : (w - inputs.horizontalGap) %
                           (inputs.horizontalGap + inputs.width) ==
-                      0) ||
+                      0) &&
                 (y - inputs.verticalGap) %
                     (inputs.verticalGap + inputs.height) ==
                     0;
