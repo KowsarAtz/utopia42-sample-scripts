@@ -77,7 +77,7 @@ const descriptor = {
                     },
                 ],
                 gridDescriptor: {
-                    rows: [["collection", "collection", "tokenId"]],
+                    rows: [["collection", "tokenId"]],
                 },
             },
             isList: true,
@@ -97,8 +97,7 @@ const descriptor = {
 
 async function main() {
     const inputs = await rxjs.firstValueFrom(UtopiaApi.getInputsFromUser(descriptor));
-
-
+    
 
     console.log(JSON.stringify(inputs));
 }
