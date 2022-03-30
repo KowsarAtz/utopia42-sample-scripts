@@ -116,7 +116,6 @@ async function main() {
         z: Math.floor(playerPosition.z) - startingPosition.z,
     };
 
-    let side = "";
     const start = {
         x: startingPosition.x,
         y: startingPosition.y,
@@ -130,52 +129,58 @@ async function main() {
         (inputs.rowsCount + 1) * inputs.verticalGap +
         inputs.rowsCount * inputs.height;
 
-    let drawAlongX = true;
+    const drawAlongX =
+        Math.abs(wallRelativeStartingPosition.x) <
+        Math.abs(wallRelativeStartingPosition.z);
 
-    if (
-        Math.abs(wallRelativeStartingPosition.x) >=
-        Math.abs(wallRelativeStartingPosition.z)
-    ) {
-        drawAlongX = false;
-        if (wallRelativeStartingPosition.x >= 0) {
-            side = "left";
-            start.z = start.z - wallWidth;
-        } else {
-            side = "right";
-        }
-    } else {
-        if (wallRelativeStartingPosition.z >= 0) {
-            side = "back";
-        } else {
-            side = "front";
-            start.x = start.x - wallWidth;
-        }
-    }
+    const incrementor = (w, y) => {
+        return {
+            x:
+                start.x +
+                (drawAlongX ? w : 0) *
+                    (wallRelativeStartingPosition.z >= 0 ? 1 : -1),
+            z:
+                start.z +
+                (drawAlongX ? 0 : w) *
+                    (wallRelativeStartingPosition.x >= 0 ? -1 : 1),
+            y: start.y + y,
+        };
+    };
+
+    const isMetaCandidate = (w, y) => {
+        if (
+            (y - inputs.verticalGap) % (inputs.verticalGap + inputs.height) !=
+            0
+        )
+            return false;
+        // if (
+        //     (drawAlongX && wallRelativeStartingPosition.z >= 0) ||
+        //     (!drawAlongX && wallRelativeStartingPosition.x < 0)
+        // )
+            return (
+                (w - inputs.horizontalGap) %
+                    (inputs.horizontalGap + inputs.width) ==
+                0
+            );
+        // return w % (inputs.horizontalGap + inputs.width) == 0;
+    };
+
+    const side = drawAlongX
+        ? wallRelativeStartingPosition.z >= 0
+            ? "back"
+            : "front"
+        : wallRelativeStartingPosition.x >= 0
+        ? "left"
+        : "right";
 
     const nftWallData = [];
 
     for (let y = wallHeight - 1; y >= 0; y--)
         for (let w = 0; w < wallWidth; w++) {
-            const pos = {
-                x: start.x + (drawAlongX ? w : 0),
-                z: start.z + (drawAlongX ? 0 : w),
-                y: start.y + y,
-            };
-
-            const attachMeta =
-                (drawAlongX
-                    ? (w - inputs.horizontalGap) %
-                          (inputs.horizontalGap + inputs.width) ==
-                      0
-                    : (w - inputs.horizontalGap) %
-                          (inputs.horizontalGap + inputs.width) ==
-                      0) &&
-                (y - inputs.verticalGap) %
-                    (inputs.verticalGap + inputs.height) ==
-                    0;
+            const pos = incrementor(w, y);
 
             let metaBlock = null;
-            if (attachMeta && inputs.items != null && inputs.items.length > 0) {
+            if (isMetaCandidate(w, y) && inputs.items != null && inputs.items.length > 0) {
                 console.log("meta attached:", pos);
                 metaBlock = {
                     type: "nft",
@@ -201,7 +206,9 @@ async function main() {
             });
         }
 
-    console.log(JSON.stringify(nftWallData.filter(d => d.type.metaBlock != null)));
+    console.log(
+        JSON.stringify(nftWallData.filter((d) => d.type.metaBlock != null))
+    );
     const result = await rxjs.firstValueFrom(
         UtopiaApi.placeBlocks(nftWallData)
     );
