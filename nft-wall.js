@@ -110,8 +110,6 @@ async function main() {
         z: Math.floor(inputs.startingPosition.z),
     };
 
-    console.log("start", startingPosition);
-
     const wallRelativeStartingPosition = {
         x: Math.floor(playerPosition.x) - startingPosition.x,
         y: Math.floor(playerPosition.y) - startingPosition.y,
@@ -156,6 +154,8 @@ async function main() {
 
     const nftWallData = [];
 
+    console.log("start", start);
+
     for (let y = 0; y < wallHeight; y++)
         for (let w = 0; w < wallWidth; w++) {
             const pos = {
@@ -163,6 +163,7 @@ async function main() {
                 z: start.z + drawAlongX ? 0 : w,
                 y: start.y + y,
             };
+            console.log("pos", pos);
 
             const attachMeta =
                 (drawAlongX
