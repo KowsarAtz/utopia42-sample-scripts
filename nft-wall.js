@@ -138,16 +138,16 @@ async function main() {
     ) {
         drawAlongX = false;
         if (wallRelativeStartingPosition.x >= 0) {
-            side = "left";
+            side = "right";
             start.z = start.z - wallWidth;
         } else {
-            side = "right";
+            side = "left";
         }
     } else {
         if (wallRelativeStartingPosition.z >= 0) {
-            side = "back";
-        } else {
             side = "front";
+        } else {
+            side = "back";
             start.x = start.x - wallWidth;
         }
     }
