@@ -159,8 +159,8 @@ async function main() {
     for (let y = 0; y < wallHeight; y++)
         for (let w = 0; w < wallWidth; w++) {
             const pos = {
-                x: start.x + drawAlongX ? w : 0,
-                z: start.z + drawAlongX ? 0 : w,
+                x: start.x + (drawAlongX ? w : 0),
+                z: start.z + (drawAlongX ? 0 : w),
                 y: start.y + y,
             };
             console.log("pos", pos);
