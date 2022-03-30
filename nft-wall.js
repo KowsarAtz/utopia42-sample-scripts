@@ -130,7 +130,7 @@ async function main() {
         (inputs.rowsCount + 1) * inputs.verticalGap +
         inputs.rowsCount * inputs.height;
 
-    const drawAlongX = true;
+    let drawAlongX = true;
 
     if (
         Math.abs(wallRelativeStartingPosition.x) >=
