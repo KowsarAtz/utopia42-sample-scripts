@@ -201,7 +201,7 @@ async function main() {
             });
         }
 
-    console.log(nftWallData);
+    console.log(JSON.stringify(nftWallData));
     const result = await rxjs.firstValueFrom(
         UtopiaApi.placeBlocks(nftWallData)
     );
