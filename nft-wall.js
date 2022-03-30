@@ -192,12 +192,10 @@ async function main() {
 
             nftWallData.push({
                 position: pos,
-                type: !attachMeta
-                    ? null
-                    : {
-                          blockType: inputs.wallBlockType,
-                          metaBlock: metaBlock,
-                      },
+                type: {
+                    blockType: inputs.wallBlockType,
+                    metaBlock: metaBlock,
+                },
             });
         }
     const result = await rxjs.firstValueFrom(
