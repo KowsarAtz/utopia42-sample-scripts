@@ -176,7 +176,7 @@ async function main() {
 
             let metaBlock = null;
             if (attachMeta && inputs.items != null && inputs.items.length > 0) {
-                console.log("meta attached:", pos)
+                console.log("meta attached:", pos);
                 metaBlock = {
                     type: "nft",
                     properties: {},
@@ -194,11 +194,14 @@ async function main() {
             nftWallData.push({
                 position: pos,
                 type: {
-                    blockType: inputs.wallBlockType,
+                    blockType:
+                        metaBlock != null ? "#ffffff" : inputs.wallBlockType,
                     metaBlock: metaBlock,
                 },
             });
         }
+
+    console.log(nftWallData);
     const result = await rxjs.firstValueFrom(
         UtopiaApi.placeBlocks(nftWallData)
     );
