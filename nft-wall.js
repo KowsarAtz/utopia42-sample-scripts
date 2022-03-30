@@ -181,7 +181,6 @@ async function main() {
 
             let metaBlock = null;
             if (isMetaCandidate(w, y) && inputs.items != null && inputs.items.length > 0) {
-                console.log("meta attached:", pos);
                 metaBlock = {
                     type: "nft",
                     properties: {},
@@ -199,16 +198,12 @@ async function main() {
             nftWallData.push({
                 position: pos,
                 type: {
-                    blockType:
-                        metaBlock != null ? "#ffffff" : inputs.wallBlockType,
+                    blockType: inputs.wallBlockType,
                     metaBlock: metaBlock,
                 },
             });
         }
 
-    console.log(
-        JSON.stringify(nftWallData.filter((d) => d.type.metaBlock != null))
-    );
     const result = await rxjs.firstValueFrom(
         UtopiaApi.placeBlocks(nftWallData)
     );
