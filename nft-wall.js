@@ -110,6 +110,8 @@ async function main() {
         z: Math.floor(inputs.startingPosition.z),
     };
 
+    console.log("start", startingPosition);
+
     const wallRelativeStartingPosition = {
         x: Math.floor(playerPosition.x) - startingPosition.x,
         y: Math.floor(playerPosition.y) - startingPosition.y,
@@ -158,7 +160,7 @@ async function main() {
         for (let w = 0; w < wallWidth; w++) {
             const pos = {
                 x: start.x + drawAlongX ? w : 0,
-                x: start.x + drawAlongX ? 0 : w,
+                z: start.z + drawAlongX ? 0 : w,
                 y: start.y + y,
             };
 
