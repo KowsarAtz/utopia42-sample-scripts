@@ -66,14 +66,14 @@ const descriptor = {
                         type: "text",
                         required: true,
                         defaultValue:
-                            "0x8634666ba15ada4bbc83b9dbf285f73d9e46e4c2",
+                            "0xdc0479cc5bba033b3e7de9f178607150b3abce1f",
                     },
                     {
                         label: "Token ID",
                         name: "tokenId",
                         type: "number",
                         required: true,
-                        defaultValue: "23309",
+                        defaultValue: "3380",
                     },
                 ],
                 gridDescriptor: {
@@ -153,16 +153,16 @@ async function main() {
             0
         )
             return false;
-        // if (
-        //     (drawAlongX && wallRelativeStartingPosition.z >= 0) ||
-        //     (!drawAlongX && wallRelativeStartingPosition.x < 0)
-        // )
+        if (
+            (drawAlongX && wallRelativeStartingPosition.z >= 0) ||
+            (!drawAlongX && wallRelativeStartingPosition.x < 0)
+        )
             return (
                 (w - inputs.horizontalGap) %
                     (inputs.horizontalGap + inputs.width) ==
                 0
             );
-        // return w % (inputs.horizontalGap + inputs.width) == 0;
+        return w % (inputs.horizontalGap + inputs.width) == 0;
     };
 
     const side = drawAlongX
@@ -189,7 +189,7 @@ async function main() {
                 const nft = inputs.items.splice(0, 1)[0];
                 metaBlock.properties[side] = {
                     collection: nft.collection,
-                    tokenId: nft.tokenId.toString(),
+                    tokenId: nft.tokenId,
                     width: inputs.width,
                     height: inputs.height,
                 };
