@@ -162,7 +162,7 @@ async function main() {
                     (inputs.horizontalGap + inputs.width) ==
                 0
             );
-        return (w + (inputs.horizontalGap - 1) - inputs.width) % (inputs.horizontalGap + inputs.width) == 0;
+        return (w + 1) % (inputs.horizontalGap + inputs.width) == 0;
     };
 
     const side = drawAlongX
