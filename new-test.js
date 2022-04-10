@@ -1,20 +1,18 @@
-// Base matrix : 1010,0101,1010
-
-var baseInputs = [
+const baseInputs = [
     {
-        label: "Base matrix",
+        label: "Base Matrix",
         name: "matrix",
         type: "text",
         required: true,
     },
     {
-        label: "height",
+        label: "Height",
         name: "height",
         type: "number",
         required: true,
     },
     {
-        label: "Start point",
+        label: "Starting Point",
         name: "zero",
         type: "position",
         required: true,
@@ -27,41 +25,45 @@ var baseInputs = [
     },
 ];
 
-function make2DMatrix(flattenMatrix) {
-    flattenMatrix = flattenMatrix.replace(/\s*/gm, ``);
-    var matrix2D = flattenMatrix.split(",");
+function parse2DMatrix(flattenMatrix) {
+    flattenMatrix = flattenMatrix.replace(/\s*/gm, "");
+    const matrix2D = flattenMatrix.split(",");
     return matrix2D;
 }
 
 async function main() {
     console.log("Running Maze Builder");
-    var Inputs = await rxjs.firstValueFrom(
+    const Inputs = await rxjs.firstValueFrom(
         UtopiaApi.getInputsFromUser({ inputs: baseInputs })
     );
-    var matrix = Inputs.matrix;
-    var height = Inputs.height;
-    var zero = {
+    const matrix = Inputs.matrix;
+    const height = Inputs.height;
+    const zero = {
         x: Math.floor(Inputs.zero.x),
         y: Math.floor(Inputs.zero.y),
         z: Math.floor(Inputs.zero.z),
     };
 
-    var blockType = Inputs.blockType;
-    var matrix2D = make2DMatrix(matrix);
+    const matrix2D = parse2DMatrix(matrix);
+    const mazeData = [];
     for (let y = 0; y < height; y++) {
-        for (let x = 0; x < matrix2D.length; x++) {
-            for (let z = 0; z < matrix2D[0].length; z++) {
-                if (matrix2D[x][z] == "1") {
-                    await rxjs.firstValueFrom(
-                        UtopiaApi.placeBlock(
-                            blockType,
-                            zero.x + x,
-                            zero.y + y,
-                            zero.z + z
-                        )
-                    );
-                }
+        for (let x = 0; x < matrix2D[0].length; x++) {
+            for (let z = 0; z < matrix2D.length; z++) {
+                mazeData.push({
+                    position: {
+                        x: zero.x + x,
+                        y: zero.y + y,
+                        z: zero.z + z,
+                    },
+                    type: {
+                        blockType:
+                            matrix2D[z][x] == "1" ? Inputs.blockType : "air",
+                    },
+                });
             }
         }
     }
+
+    const result = await rxjs.firstValueFrom(UtopiaApi.placeBlocks(mazeData));
+    console.log(JSON.stringify(result));
 }
