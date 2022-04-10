@@ -29,14 +29,14 @@ var baseInputs = [
 
 function make2DMatrix(flattenMatrix){
   flattenMatrix = flattenMatrix.replaceAll(' ','');
-  var matrix2D = flattenMatrix.split(',').map(str => Number(str));
+  var matrix2D = flattenMatrix.split(',');
   return matrix2D;
 }
 
 
 
 async function main() {
-  console.log("Running Cube Builder");
+  console.log("Running Maze Builder");
   var Inputs = await rxjs.firstValueFrom(UtopiaApi.getInputsFromUser({inputs: baseInputs}));
   var matrix = Inputs.matrix;
   var hieght = Inputs.hieght;
@@ -50,7 +50,7 @@ async function main() {
     for(let x = zero.x;x<zero.x+matrix2D.length;x++){
       console.log("mmm")
       for(let z = zero.z;z<zero.z+matrix2D[x - zero.x].length;z++){
-        if(matrix2D[x][z] == "1"){
+        if(Number(matrix2D[x][z]) == "1"){
           await rxjs.firstValueFrom(UtopiaApi.placeBlock(blockType, x, y, z));
           console.log("block")
           console.log(x);
@@ -60,6 +60,4 @@ async function main() {
       }
     }
   }
-  
-
 }
