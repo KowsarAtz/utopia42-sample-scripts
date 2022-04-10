@@ -29,7 +29,7 @@ var baseInputs = [
 
 function make2DMatrix(flattenMatrix){
   flattenMatrix = flattenMatrix.replaceAll(' ','');
-  var matrix2D = flattenMatrix.split(',');
+  var matrix2D = flattenMatrix.split(',').map(str => Number(str));
   return matrix2D;
 }
 
