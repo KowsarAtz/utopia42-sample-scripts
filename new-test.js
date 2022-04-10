@@ -28,7 +28,7 @@ var baseInputs = [
 ];
 
 function make2DMatrix(flattenMatrix) {
-    flattenMatrix = flattenMatrix.replaceAll(" ", "");
+    flattenMatrix = flattenMatrix.replace(/\W*/gm, ``);
     var matrix2D = flattenMatrix.split(",");
     return matrix2D;
 }
@@ -50,14 +50,15 @@ async function main() {
     var matrix2D = make2DMatrix(matrix);
     for (let y = 0; y < height; y++) {
         for (let x = 0; x < matrix2D.length; x++) {
-            for (
-                let z = 0;
-                z < matrix2D[0].length;
-                z++
-            ) {
+            for (let z = 0; z < matrix2D[0].length; z++) {
                 if (matrix2D[x][z] == "1") {
                     await rxjs.firstValueFrom(
-                        UtopiaApi.placeBlock(blockType, zero.x+x, zero.y+y, zero.z+z)
+                        UtopiaApi.placeBlock(
+                            blockType,
+                            zero.x + x,
+                            zero.y + y,
+                            zero.z + z
+                        )
                     );
                 }
             }
