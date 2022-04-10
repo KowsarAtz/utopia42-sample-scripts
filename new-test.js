@@ -49,6 +49,12 @@ async function main() {
     for (let y = 0; y < height; y++) {
         for (let x = 0; x < matrix2D[0].length; x++) {
             for (let z = 0; z < matrix2D.length; z++) {
+                const char = matrix2D[z][x];
+                if (char != "1" && char != "0") {
+                    if (char != "*")
+                        console.warn(`unrecognized character: ${char}`);
+                    continue;
+                }
                 mazeData.push({
                     position: {
                         x: zero.x + x,
@@ -56,8 +62,7 @@ async function main() {
                         z: zero.z + z,
                     },
                     type: {
-                        blockType:
-                            matrix2D[z][x] == "1" ? Inputs.blockType : "air",
+                        blockType: char == "1" ? Inputs.blockType : "air",
                     },
                 });
             }
