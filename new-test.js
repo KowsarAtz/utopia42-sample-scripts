@@ -28,7 +28,7 @@ var baseInputs = [
 ];
 
 function make2DMatrix(flattenMatrix) {
-    flattenMatrix = flattenMatrix.replace(/\W*/gm, ``);
+    flattenMatrix = flattenMatrix.replace(/\s*/gm, ``);
     var matrix2D = flattenMatrix.split(",");
     return matrix2D;
 }
