@@ -1,63 +1,66 @@
 // Base matrix : 1010,0101,1010
 
 var baseInputs = [
-  {
-    label: "Base matrix",
-    name: "matrix",
-    type: "text",
-    required: true,
-  },
-  {
-    label: "Hieght",
-    name: "hieght",
-    type: "number",
-    required: true,
-  },
-  {
-    label: "Start point",
-    name: "zero",
-    type: "position",
-    required: true,
-  },
-  {
-    label: "Block Type",
-    name: "blockType",
-    type: "blockType",
-    required: true,
-  },
+    {
+        label: "Base matrix",
+        name: "matrix",
+        type: "text",
+        required: true,
+    },
+    {
+        label: "height",
+        name: "height",
+        type: "number",
+        required: true,
+    },
+    {
+        label: "Start point",
+        name: "zero",
+        type: "position",
+        required: true,
+    },
+    {
+        label: "Block Type",
+        name: "blockType",
+        type: "blockType",
+        required: true,
+    },
 ];
 
-function make2DMatrix(flattenMatrix){
-  flattenMatrix = flattenMatrix.replaceAll(' ','');
-  var matrix2D = flattenMatrix.split(',');
-  return matrix2D;
+function make2DMatrix(flattenMatrix) {
+    flattenMatrix = flattenMatrix.replaceAll(" ", "");
+    var matrix2D = flattenMatrix.split(",");
+    return matrix2D;
 }
 
-
-
 async function main() {
-  console.log("Running Maze Builder");
-  var Inputs = await rxjs.firstValueFrom(UtopiaApi.getInputsFromUser({inputs: baseInputs}));
-  var matrix = Inputs.matrix;
-  var hieght = Inputs.hieght;
-  var zero = Inputs.zero;
-  var blockType = Inputs.blockType;
-  console.log("yseee");
-  console.log(hieght);
-  var matrix2D = make2DMatrix(matrix);
-  for(let y = zero.y;y<zero.y+hieght;y++){
-    console.log(y)
-    for(let x = zero.x;x<zero.x+matrix2D.length;x++){
-      console.log("mmm")
-      for(let z = zero.z;z<zero.z+matrix2D[x - zero.x].length;z++){
-        if(Number(matrix2D[x][z]) == "1"){
-          await rxjs.firstValueFrom(UtopiaApi.placeBlock(blockType, x, y, z));
-          console.log("block")
-          console.log(x);
-          console.log(y);
-          console.log(z);
+    console.log("Running Maze Builder");
+    var Inputs = await rxjs.firstValueFrom(
+        UtopiaApi.getInputsFromUser({ inputs: baseInputs })
+    );
+    var matrix = Inputs.matrix;
+    var height = Inputs.height;
+    var zero = {
+        x: Math.floor(Inputs.zero.x),
+        y: Math.floor(Inputs.zero.y),
+        z: Math.floor(Inputs.zero.z),
+    };
+
+    var blockType = Inputs.blockType;
+    var matrix2D = make2DMatrix(matrix);
+    for (let y = 0; y < height; y++) {
+        for (let x = 0; x < matrix2D.length; x++) {
+            for (
+                let z = 0;
+                z < matrix2D[0].length;
+                z++
+            ) {
+                if (matrix2D[x][z] == "1") {
+                    await rxjs.firstValueFrom(
+                        UtopiaApi.placeBlock(blockType, zero.x+x, zero.y+y, zero.z+z)
+                    );
+                }
+            }
         }
-      }
     }
-  }
 }
