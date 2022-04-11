@@ -267,7 +267,7 @@ async function main() {
 
     if (inputs.items.length > 0) {
         console.warn(
-            "Could not place all images. Choose wall corners carefully"
+            `Could not place ${inputs.items.length} images. Choose wall corners carefully`
         );
     }
 }
