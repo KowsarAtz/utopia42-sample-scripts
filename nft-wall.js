@@ -218,6 +218,7 @@ async function main() {
     for (let y = 0; y < wallHeight; y++) {
         let usedColumnsCount = 0;
         for (let w = 0; w < wallWidth; w++) {
+            console.log("inner loop")
             const pos = incrementor(w, y);
 
             let metaBlock = null;
