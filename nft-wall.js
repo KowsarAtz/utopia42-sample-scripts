@@ -82,15 +82,12 @@ const descriptor = {
                         name: "collection",
                         type: "text",
                         required: true,
-                        // defaultValue:
-                        //     "0xdc0479cc5bba033b3e7de9f178607150b3abce1f",
                     },
                     {
                         label: "Token ID",
                         name: "tokenId",
                         type: "text",
-                        required: true,
-                        // defaultValue: "3380",
+                        required: true
                     },
                 ],
                 gridDescriptor: {
