@@ -144,10 +144,11 @@ async function main() {
 
     const drawAlongX = firstCorner.x != secondCorner.x;
 
-    const wallWidth = drawAlongX
-        ? Math.abs(firstCorner.x - secondCorner.x)
-        : Math.abs(firstCorner.z - secondCorner.z);
-    const wallHeight = Math.abs(firstCorner.y - secondCorner.y);
+    const wallWidth =
+        1 + drawAlongX
+            ? Math.abs(firstCorner.x - secondCorner.x)
+            : Math.abs(firstCorner.z - secondCorner.z);
+    const wallHeight = Math.abs(firstCorner.y - secondCorner.y) + 1;
 
     const startingPosition = {
         x: drawAlongX
@@ -211,16 +212,21 @@ async function main() {
 
     const nftWallData = [];
 
-    for (let y = wallHeight - 1; y >= 0; y--)
+    let usedRowsCount = 0;
+    for (let y = wallHeight - 1; y >= 0; y--) {
+        let usedColumnsCount = 0;
         for (let w = 0; w < wallWidth; w++) {
             const pos = incrementor(w, y);
 
             let metaBlock = null;
             if (
+                usedColumnsCount < inputs.columnsCount &&
+                usedRowsCount < inputs.rowsCount &&
                 isMetaCandidate(w, y) &&
                 inputs.items != null &&
                 inputs.items.length > 0
             ) {
+                usedColumnsCount += 1;
                 metaBlock = {
                     type: "nft",
                     properties: {},
@@ -235,17 +241,22 @@ async function main() {
                 };
             }
 
-            nftWallData.push({
-                position: pos,
-                type: {
-                    blockType:
-                        inputs.createWall == "yes"
-                            ? inputs.wallBlockType
-                            : null,
-                    metaBlock: metaBlock,
-                },
-            });
+            const blockType =
+                inputs.createWall == "yes" ? inputs.wallBlockType : null;
+
+            if (metaBlock != null || blockType != null)
+                nftWallData.push({
+                    position: pos,
+                    type: {
+                        blockType,
+                        metaBlock,
+                    },
+                });
         }
+        if (usedColumnsCount > 0) {
+            usedRowsCount += 1;
+        }
+    }
 
     const result = await rxjs.firstValueFrom(
         UtopiaApi.placeBlocks(nftWallData)
