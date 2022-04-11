@@ -132,14 +132,12 @@ async function main() {
         y: Math.floor(inputs.firstCorner.y),
         z: Math.floor(inputs.firstCorner.z),
     };
-    console.log("first corner", firstCorner)
     
     const secondCorner = {
         x: Math.floor(inputs.secondCorner.x),
         y: Math.floor(inputs.secondCorner.y),
         z: Math.floor(inputs.secondCorner.z),
     };
-    console.log("second corner", secondCorner)
 
     if (firstCorner.x != secondCorner.x && firstCorner.z != secondCorner.z)
         throw new Error("Invalid wall corners");
@@ -147,12 +145,10 @@ async function main() {
     const drawAlongX = firstCorner.x != secondCorner.x;
 
     const wallWidth =
-        1 + drawAlongX
+        1 + (drawAlongX
             ? Math.abs(firstCorner.x - secondCorner.x)
-            : Math.abs(firstCorner.z - secondCorner.z);
+            : Math.abs(firstCorner.z - secondCorner.z));
     const wallHeight = Math.abs(firstCorner.y - secondCorner.y) + 1;
-
-    console.log(`wall height ${wallHeight} width ${wallWidth}`);
 
     const startingPosition = {
         x: drawAlongX
@@ -167,8 +163,6 @@ async function main() {
                 : Math.min(firstCorner.z, secondCorner.z)
             : firstCorner.z,
     };
-
-    console.log("wall starting position: ", startingPosition);
 
     const wallRelativeStartingPosition = {
         x: startingPosition.x - playerPosition.x,
