@@ -82,15 +82,15 @@ const descriptor = {
                         name: "collection",
                         type: "text",
                         required: true,
-                        defaultValue:
-                            "0xdc0479cc5bba033b3e7de9f178607150b3abce1f",
+                        // defaultValue:
+                        //     "0xdc0479cc5bba033b3e7de9f178607150b3abce1f",
                     },
                     {
                         label: "Token ID",
                         name: "tokenId",
-                        type: "number",
+                        type: "text",
                         required: true,
-                        defaultValue: "3380",
+                        // defaultValue: "3380",
                     },
                 ],
                 gridDescriptor: {
@@ -212,6 +212,17 @@ async function main() {
 
     const nftWallData = [];
 
+    const items = [];
+    while(inputs.items.length > 0) {
+        const item = inputs.items.splice(0, 1)[0];
+        for (const tokenId of item.tokenId.replace(/\s*/gm, "").split(",")) {
+            items.push({
+                collection,
+                tokenId: Number(tokenId)
+            })
+        }
+    }
+
     let usedRowsCount = 0;
     for (let y = 0; y < wallHeight; y++) {
         console.log("outer loop");
@@ -225,8 +236,8 @@ async function main() {
                 usedColumnsCount < inputs.columnsCount &&
                 usedRowsCount < inputs.rowsCount &&
                 isMetaCandidate(w, y) &&
-                inputs.items != null &&
-                inputs.items.length > 0
+                items != null &&
+                items.length > 0
             ) {
                 usedColumnsCount += 1;
                 metaBlock = {
@@ -234,7 +245,7 @@ async function main() {
                     properties: {},
                 };
 
-                const nft = inputs.items.splice(0, 1)[0];
+                const nft = items.splice(0, 1)[0];
                 metaBlock.properties[side] = {
                     collection: nft.collection,
                     tokenId: nft.tokenId,
@@ -265,9 +276,9 @@ async function main() {
     );
     console.log(JSON.stringify(result));
 
-    if (inputs.items.length > 0) {
+    if (items.length > 0) {
         console.warn(
-            `Could not place ${inputs.items.length} images. Choose wall corners carefully`
+            `Could not place ${items.length} images. Choose wall corners carefully`
         );
     }
 }
