@@ -164,6 +164,8 @@ async function main() {
             : firstCorner.z,
     };
 
+    console.log("wall starting position: ", startingPosition)
+
     const wallRelativeStartingPosition = {
         x: startingPosition.x - playerPosition.x,
         y: startingPosition.y - playerPosition.y,
@@ -220,8 +222,8 @@ async function main() {
 
             let metaBlock = null;
             if (
-                // usedColumnsCount < inputs.columnsCount &&
-                // usedRowsCount < inputs.rowsCount &&
+                usedColumnsCount < inputs.columnsCount &&
+                usedRowsCount < inputs.rowsCount &&
                 isMetaCandidate(w, y) &&
                 inputs.items != null &&
                 inputs.items.length > 0
