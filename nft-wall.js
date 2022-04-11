@@ -213,7 +213,7 @@ async function main() {
     const nftWallData = [];
 
     let usedRowsCount = 0;
-    for (let y = wallHeight - 1; y >= 0; y--) {
+    for (let y = 0; y < wallHeight; y++) {
         let usedColumnsCount = 0;
         for (let w = 0; w < wallWidth; w++) {
             const pos = incrementor(w, y);
