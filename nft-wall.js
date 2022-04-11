@@ -22,7 +22,6 @@ const descriptor = {
                 { key: "yes", value: "yes" },
                 { key: "no", value: "no" },
             ],
-            hint: "<span><s>If no, script will only try to attach images to an existing wall</s></span>",
         },
         {
             label: "Wall Block Type",
@@ -146,13 +145,13 @@ async function main() {
 
     const startingPosition = {
         x: drawAlongX
-            ? firstCorner.z >= 0
+            ? firstCorner.z >= startingPosition.z
                 ? Math.min(firstCorner.x, secondCorner.x)
                 : Math.max(firstCorner.x, secondCorner.x)
             : firstCorner.x,
         y: Math.min(firstCorner.y, secondCorner.y),
         z: !drawAlongX
-            ? firstCorner.x >= 0
+            ? firstCorner.x >= startingPosition.x
                 ? Math.max(firstCorner.z, secondCorner.z)
                 : Math.min(firstCorner.z, secondCorner.z)
             : firstCorner.z,
@@ -195,28 +194,6 @@ async function main() {
             );
         return (w + 1) % (inputs.horizontalGap + inputs.width) == 0;
     };
-
-    // const isWallPosition = (pos) => {
-    //     if (
-    //         (pos.y < firstCorner.y && pos.y > secondCorner.y) ||
-    //         (pos.y > firstCorner.y && pos.y < secondCorner.y)
-    //     )
-    //         return false;
-
-    //     if (
-    //         drawAlongX &&
-    //         ((pos.x < firstCorner.x && pos.x > secondCorner.x) ||
-    //             (pos.x > firstCorner.x && pos.x < secondCorner.x))
-    //     ) {
-    //         return false;
-    //     }
-    //     if (
-    //         (pos.z < firstCorner.z && pos.z > secondCorner.z) ||
-    //         (pos.z > firstCorner.z && pos.z < secondCorner.z)
-    //     )
-    //         return false;
-    //     return true;
-    // };
 
     const side = drawAlongX
         ? wallRelativeStartingPosition.z >= 0
