@@ -220,8 +220,8 @@ async function main() {
 
             let metaBlock = null;
             if (
-                usedColumnsCount < inputs.columnsCount &&
-                usedRowsCount < inputs.rowsCount &&
+                // usedColumnsCount < inputs.columnsCount &&
+                // usedRowsCount < inputs.rowsCount &&
                 isMetaCandidate(w, y) &&
                 inputs.items != null &&
                 inputs.items.length > 0
