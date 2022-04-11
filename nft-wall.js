@@ -150,6 +150,8 @@ async function main() {
             : Math.abs(firstCorner.z - secondCorner.z);
     const wallHeight = Math.abs(firstCorner.y - secondCorner.y) + 1;
 
+    console.log(`wall height ${wallHeight} width ${wallWidth}`);
+
     const startingPosition = {
         x: drawAlongX
             ? firstCorner.z >= playerPosition.z
@@ -164,7 +166,7 @@ async function main() {
             : firstCorner.z,
     };
 
-    console.log("wall starting position: ", startingPosition)
+    console.log("wall starting position: ", startingPosition);
 
     const wallRelativeStartingPosition = {
         x: startingPosition.x - playerPosition.x,
@@ -216,9 +218,10 @@ async function main() {
 
     let usedRowsCount = 0;
     for (let y = 0; y < wallHeight; y++) {
+        console.log("outer loop");
         let usedColumnsCount = 0;
         for (let w = 0; w < wallWidth; w++) {
-            console.log("inner loop")
+            console.log("inner loop");
             const pos = incrementor(w, y);
 
             let metaBlock = null;
