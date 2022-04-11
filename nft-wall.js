@@ -132,12 +132,14 @@ async function main() {
         y: Math.floor(inputs.firstCorner.y),
         z: Math.floor(inputs.firstCorner.z),
     };
-
+    console.log("first corner", firstCorner)
+    
     const secondCorner = {
         x: Math.floor(inputs.secondCorner.x),
         y: Math.floor(inputs.secondCorner.y),
         z: Math.floor(inputs.secondCorner.z),
     };
+    console.log("second corner", secondCorner)
 
     if (firstCorner.x != secondCorner.x && firstCorner.z != secondCorner.z)
         throw new Error("Invalid wall corners");
