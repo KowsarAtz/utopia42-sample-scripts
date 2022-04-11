@@ -7,8 +7,8 @@ const descriptor = {
             required: true,
         },
         {
-            label: "Wall Block Type",
-            name: "wallBlockType",
+            label: "Block Type",
+            name: "blockType",
             type: "blockType",
             required: true,
             defaultValue: "stone",
@@ -28,7 +28,8 @@ const descriptor = {
     ],
     gridDescriptor: {
         rows: [
-            ["position", "blockType"],
+            ["position"], 
+            ["blockType"],
             ["firstCorner", "secondCorner"],
         ],
     },
