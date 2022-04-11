@@ -217,7 +217,7 @@ async function main() {
         const item = inputs.items.splice(0, 1)[0];
         for (const tokenId of item.tokenId.replace(/\s*/gm, "").split(",")) {
             items.push({
-                collection,
+                collection: item.collection,
                 tokenId: Number(tokenId)
             })
         }
