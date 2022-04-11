@@ -117,9 +117,15 @@ async function main() {
         UtopiaApi.getInputsFromUser(descriptor)
     );
 
-    const playerPosition = await rxjs.firstValueFrom(
+    const playerPositionRaw = await rxjs.firstValueFrom(
         UtopiaApi.getPlayerPosition()
     );
+
+    const playerPosition = {
+        x: Math.floor(playerPositionRaw.x),
+        y: Math.floor(playerPositionRaw.y),
+        z: Math.floor(playerPositionRaw.z),
+    };
 
     const firstCorner = {
         x: Math.floor(inputs.firstCorner.x),
@@ -145,22 +151,22 @@ async function main() {
 
     const startingPosition = {
         x: drawAlongX
-            ? firstCorner.z >= startingPosition.z
+            ? firstCorner.z >= playerPosition.z
                 ? Math.min(firstCorner.x, secondCorner.x)
                 : Math.max(firstCorner.x, secondCorner.x)
             : firstCorner.x,
         y: Math.min(firstCorner.y, secondCorner.y),
         z: !drawAlongX
-            ? firstCorner.x >= startingPosition.x
+            ? firstCorner.x >= playerPosition.x
                 ? Math.max(firstCorner.z, secondCorner.z)
                 : Math.min(firstCorner.z, secondCorner.z)
             : firstCorner.z,
     };
 
     const wallRelativeStartingPosition = {
-        x: startingPosition.x - Math.floor(playerPosition.x),
-        y: startingPosition.y - Math.floor(playerPosition.y),
-        z: startingPosition.z - Math.floor(playerPosition.z),
+        x: startingPosition.x - playerPosition.x,
+        y: startingPosition.y - playerPosition.y,
+        z: startingPosition.z - playerPosition.z,
     };
 
     const incrementor = (w, y) => {
