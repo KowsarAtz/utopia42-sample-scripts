@@ -70,7 +70,7 @@ async function main() {
         }
         while (true) {
             socketConfigs.forEach((sc) => {
-                sendState(sc);
+                sendState(sc, Inputs.avatarUrl);
             });
             await sleep(100);
         }
@@ -79,7 +79,7 @@ async function main() {
     }
 }
 
-function sendState(sc) {
+function sendState(sc, url) {
     if (sc.socket.readyState === 0) return;
     // {
     //     walletId: string;
@@ -111,7 +111,7 @@ function sendState(sc) {
     sc.lastPos = newPos;
 
     let newState = {
-        avatarUrl: Inputs.avatarUrl,
+        avatarUrl: url,
         walletId: "wallet_" + sc.index,
         position: newPos,
         floating: false,
