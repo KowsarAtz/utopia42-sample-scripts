@@ -18,15 +18,22 @@ var params = [
         ],
         defaultValue: "wss://utopiapi.vitaminhq.ir",
     },
-    {
-        label: "Avatar URL",
-        name: "avatarUrl",
-        type: "text",
-        required: true,
-        defaultValue:
-            "https://d1a370nemizbjq.cloudfront.net/d7a562b0-2378-4284-b641-95e5262e28e5.glb",
-    },
+    // {
+    //     label: "Avatar URL",
+    //     name: "avatarUrl",
+    //     type: "text",
+    //     required: true,
+    //     defaultValue:
+    //         "https://d1a370nemizbjq.cloudfront.net/d7a562b0-2378-4284-b641-95e5262e28e5.glb",
+    // },
 ];
+
+const avatarUrls = [
+    "https://d1a370nemizbjq.cloudfront.net/84102dbe-7b6c-47cb-a49d-472f365483d9.glb", 
+    "https://d1a370nemizbjq.cloudfront.net/759bf4ae-ae39-4c67-b6d2-9ee1d658a2fa.glb", 
+    "https://d1a370nemizbjq.cloudfront.net/24c87096-4b69-4dfb-bd3f-2d4ad177466f.glb", 
+    "https://d1a370nemizbjq.cloudfront.net/cda83b24-213e-4941-b4b1-8bfd44ec9bfe.glb", 
+]
 
 console.log("Running FakeAvatars Script");
 
@@ -70,7 +77,7 @@ async function main() {
         }
         while (true) {
             socketConfigs.forEach((sc) => {
-                sendState(sc, Inputs.avatarUrl);
+                sendState(sc, avatarUrls[sc.index % 4]);
             });
             await sleep(100);
         }
