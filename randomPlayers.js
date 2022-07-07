@@ -29,6 +29,8 @@ const avatarUrls = [
 
 console.log("Running FakeAvatars Script");
 
+const walletPrefix = Math.floor(Math.random() * 100);
+
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function main() {
@@ -112,11 +114,11 @@ function sendState(sc, url) {
     let newState = {
         rid: `${Math.random()}`,
         avatarUrl: url,
-        walletId: "wallet_" + sc.index,
+        walletId: walletPrefix + "_wallet_" + sc.index,
         position: newPos,
         floating: false,
         jump: false,
-        sprinting: true
+        sprinting: true,
     };
     sc.socket.send(JSON.stringify(newState));
 }
