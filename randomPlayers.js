@@ -13,23 +13,17 @@ var params = [
         required: true,
         options: [
             { key: "Local Host", value: "ws://localhost:8080" },
-            { key: "Dev Server", value: "wss://utopiapi.vitaminhq.ir" },
-            { key: "Server", value: "wss://api.utopia42.club" },
+            { key: "Test Server", value: "wss://utopiapi.vitaminhq.ir" },
+            { key: "Demo Server", value: "wss://dev.utopia42.club" },
+            { key: "Server", value: "wss://api.utopia42.club" }
         ],
         defaultValue: "wss://utopiapi.vitaminhq.ir",
     },
 ];
 
-const avatarUrls = [
-    "https://d1a370nemizbjq.cloudfront.net/efaddf31-5b4f-4a5e-954a-741728492150.glb",
-    "https://d1a370nemizbjq.cloudfront.net/d640df44-d1ff-449b-a9f2-10989794bd86.glb",
-    "https://d1a370nemizbjq.cloudfront.net/a6567559-7fd1-4a3b-bee6-40b9a7b8e76b.glb",
-    "https://d1a370nemizbjq.cloudfront.net/cd07bc8d-941f-4c94-b0d7-7fbdf0c4f126.glb",
-];
-
 console.log("Running FakeAvatars Script");
 
-const walletPrefix = Math.floor(Math.random() * 100);
+const walletPrefix = Math.floor(Math.random() * 1000);
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -70,9 +64,7 @@ async function main() {
             };
         }
         while (true) {
-            socketConfigs.forEach((sc) => {
-                sendState(sc, avatarUrls[sc.index % 4]);
-            });
+            socketConfigs.forEach(sendState);
             await sleep(100);
         }
     } catch (e) {
@@ -80,16 +72,8 @@ async function main() {
     }
 }
 
-function sendState(sc, url) {
+function sendState(sc) {
     if (sc.socket.readyState === 0) return;
-    // {
-    //     walletId: string;
-    //     position: Position;
-    //     forward: Position;
-    //     sprint: boolean;
-    //     floating: boolean;
-    //     jump: boolean;
-    // }
 
     let movement;
     let forward;
@@ -113,7 +97,6 @@ function sendState(sc, url) {
 
     let newState = {
         rid: `${Math.random()}`,
-        avatarUrl: url,
         walletId: walletPrefix + "_wallet_" + sc.index,
         position: newPos,
         floating: false,
